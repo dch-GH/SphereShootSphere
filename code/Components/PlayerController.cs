@@ -52,6 +52,7 @@ public class PlayerController : Component, INetworkSerializable
 	protected override void OnAwake()
 	{
 		//Log.Info( $"OnAwake --- IsHost={GameNetworkSystem.IsHost} IsProxy={IsProxy}, OwnerId={Network.OwnerId}, IsOwner={Network.IsOwner}" );
+		Sound.Play( "assets/sounds/join.sound", GameObject.Transform.Position );
 		if ( IsProxy )
 		{
 			SetupProxy();
