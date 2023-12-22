@@ -1,6 +1,4 @@
-﻿using Sandbox.Network;
-using System.Diagnostics.Metrics;
-using static Sandbox.Component;
+﻿using static Sandbox.Component;
 
 namespace ATMP;
 
@@ -31,7 +29,7 @@ public class Weapon : Component, IRenderOverlay
 
 			var eyes = _player.Eye.Transform.Position;
 			var fwd = _player.Cam.GameObject.Transform.LocalRotation.Forward;
-			var tr = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).WithoutTags( GameTags.LocalPlayer ).UseHitboxes().Run();
+			var tr = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).WithoutTags(GameTags.LocalPlayer).UseHitboxes().Run();
 
 			ShootEffect( eyes, tr.Hit, tr.Hit ? tr.HitPosition : eyes + fwd * 2500 );
 
@@ -39,8 +37,6 @@ public class Weapon : Component, IRenderOverlay
 				return;
 
 			var go = tr.Hitbox.GameObject;
-
-
 			if ( go.Components.TryGet<PlayerController>( out var victim ) )
 			{
 				_client.Score += 1;

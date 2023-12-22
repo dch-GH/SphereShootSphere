@@ -85,7 +85,7 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 		}
 
 		startLocation.Scale = 1;
-		Log.Info( $"Joiner: {channel.Id}, {channel.DisplayName}, {channel.Name}, {channel.Address}" );
+		//Log.Info( $"Joiner: {channel.Id}, {channel.DisplayName}, {channel.Name}, {channel.Address}" );
 		SpawnPlayerAsync( channel, startLocation );
 	}
 

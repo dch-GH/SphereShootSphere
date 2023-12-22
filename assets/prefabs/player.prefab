@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "8cb57c19-b880-43c0-9dac-55fd86e3ef9c",
+    "Id": "461dac42-e74b-49b0-8693-b4e2291458f6",
     "Name": "player",
     "Enabled": true,
     "Components": [
@@ -17,10 +17,10 @@
       {
         "__type": "PlayerController",
         "__enabled": true,
-        "_cc": "8cb57c19-b880-43c0-9dac-55fd86e3ef9c",
-        "_hitbox": "af061e2b-fa37-4ea0-ab76-6161371dff4b",
-        "Body": "af061e2b-fa37-4ea0-ab76-6161371dff4b",
-        "Eye": "0bde352f-1681-4b95-9f26-572b6a6be518",
+        "_cc": "461dac42-e74b-49b0-8693-b4e2291458f6",
+        "_hitbox": "c50058d4-79b8-4440-a064-13bcb97f529d",
+        "Body": "c50058d4-79b8-4440-a064-13bcb97f529d",
+        "Eye": "d016ff4e-b737-47f5-8692-4be301a4b200",
         "Gravity": "0,0,800",
         "MoveSpeed": 400,
         "RollIntensity": 0.01,
@@ -29,8 +29,8 @@
       {
         "__type": "Weapon",
         "__enabled": true,
-        "Beam": "8cb57c19-b880-43c0-9dac-55fd86e3ef9c",
-        "Splash": "7cc1a469-b6ed-44ec-99c4-05079f3249fb"
+        "Beam": "461dac42-e74b-49b0-8693-b4e2291458f6",
+        "Splash": "9a2876f4-98e5-4c26-bf71-f86fb345b39b"
       },
       {
         "__type": "SceneParticleManager",
@@ -47,7 +47,7 @@
     ],
     "Children": [
       {
-        "Id": "af061e2b-fa37-4ea0-ab76-6161371dff4b",
+        "Id": "c50058d4-79b8-4440-a064-13bcb97f529d",
         "Name": "Body",
         "Position": "0,0,32.92603",
         "Scale": "0.5,0.5,0.5",
@@ -76,13 +76,13 @@
         ]
       },
       {
-        "Id": "0bde352f-1681-4b95-9f26-572b6a6be518",
+        "Id": "d016ff4e-b737-47f5-8692-4be301a4b200",
         "Name": "Eyes",
         "Position": "0,0,59.39347",
         "Enabled": true
       },
       {
-        "Id": "7cc1a469-b6ed-44ec-99c4-05079f3249fb",
+        "Id": "9a2876f4-98e5-4c26-bf71-f86fb345b39b",
         "Name": "BeamSplashes",
         "Position": "-97.91241,123.5333,-33.04216",
         "Enabled": true,

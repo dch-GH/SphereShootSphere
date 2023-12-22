@@ -23,38 +23,38 @@ public class PlayerController : Component, INetworkSerializable
 	float _footstepVolume = 4;
 	GameNetworkManager _netMan;
 
-	// NOTE: OnStart seems to be the only "start phase (awake/onenabled/onstart)"
-	// method where IsProxy actually works and the network owner is actually setup in time.
 	protected override void OnStart()
 	{
-		Log.Info( $"Is Proxy: {IsProxy}, OwnerId = {Network.OwnerId}, IsOwner = {Network.IsOwner}" );
+		//Log.Info( $"OnStart --- IsProxy={IsProxy}, OwnerId={Network.OwnerId}, IsOwner={Network.IsOwner}" );
 		_hitbox.Target = GameObject;
-		_netMan = Scene.GetAllComponents<GameNetworkManager>().First();
 
 		if ( IsProxy )
-			return;
-
-		Cam = Scene.GetAllComponents<CameraComponent>().First();
-		Tags.Add( GameTags.LocalPlayer );
-		Body.Components.Get<ModelRenderer>().RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
-		var cam = Scene.GetAllComponents<CameraComponent>().FirstOrDefault();
-		if ( cam is not null )
 		{
-			EyeAngles = cam.Transform.Rotation.Angles();
+			// NOTE: The host has to call this in OnStart because IsProxy isn't valid (for the host) for proxxies.
+			SetupProxy();
+			return;
+		}
+		else
+		{
+			Tags.Add( GameTags.LocalPlayer );
+			Body.Components.Get<ModelRenderer>().RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+		}
+
+		_netMan = Scene.GetAllComponents<GameNetworkManager>().First();
+		Cam = Scene.GetAllComponents<CameraComponent>().First();
+		if ( Cam is not null )
+		{
+			EyeAngles = Cam.Transform.Rotation.Angles();
 			EyeAngles.roll = 0;
 		}
 	}
 
 	protected override void OnAwake()
 	{
-		base.OnAwake();
+		//Log.Info( $"OnAwake --- IsHost={GameNetworkSystem.IsHost} IsProxy={IsProxy}, OwnerId={Network.OwnerId}, IsOwner={Network.IsOwner}" );
 		if ( IsProxy )
 		{
-			Body.Components.Get<ModelRenderer>().RenderType = ModelRenderer.ShadowRenderType.On;
-			Body.Components.Get<ModelRenderer>().Tint = Color.Red;
-			Tags.Remove( GameTags.LocalPlayer );
-			Body.Tags.Remove( GameTags.LocalPlayer );
-			return;
+			SetupProxy();
 		}
 	}
 
@@ -180,6 +180,14 @@ public class PlayerController : Component, INetworkSerializable
 		{
 			_cc.Velocity = _cc.Velocity.WithZ( 0 );
 		}
+	}
+
+	private void SetupProxy()
+	{
+		Body.Components.Get<ModelRenderer>().RenderType = ModelRenderer.ShadowRenderType.On;
+		Body.Components.Get<ModelRenderer>().Tint = Color.Red;
+		Tags.Remove( GameTags.LocalPlayer );
+		Body.Tags.Remove( GameTags.LocalPlayer );
 	}
 
 	private void BuildWishVelocity()

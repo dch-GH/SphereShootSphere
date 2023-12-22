@@ -8,9 +8,11 @@ public class ClientComponent : Component, INetworkSerializable
 	[Property] public GameObject Pawn { get; set; }
 	[Property] private Guid ConnId => ConnectionId;
 
+	public bool IsLocal => ConnectionId == Connection.Local.Id;
 	public Guid ConnectionId { get; private set; }
 	public string UserName { get; private set; }
 	public int Score { get; set; }
+	public bool IsHost => GameNetworkSystem.IsHost;
 
 	public void OnConnectHost(Connection channel, GameObject pawn)
 	{
@@ -24,7 +26,7 @@ public class ClientComponent : Component, INetworkSerializable
 	[Broadcast]
 	public void OnConnectClient( Guid channelId, string userName)
 	{
-		Log.Info( $"OnConnectClient - {channelId} - {userName}" );
+		//Log.Info( $"OnConnectClient - {channelId} - {userName}" );
 		ConnectionId = channelId;
 		UserName = userName;
 	}
