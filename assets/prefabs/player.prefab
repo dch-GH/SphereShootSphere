@@ -1,0 +1,96 @@
+{
+  "RootObject": {
+    "Id": "fb2f3c82-a7f4-46c0-9142-aa989bde57ed",
+    "Name": "player",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "CharacterController",
+        "__enabled": true,
+        "Acceleration": 10,
+        "GroundAngle": 45,
+        "Height": 64,
+        "IgnoreLayers": "",
+        "Radius": 16,
+        "StepHeight": 18
+      },
+      {
+        "__type": "PlayerController",
+        "__enabled": true,
+        "_cc": "fb2f3c82-a7f4-46c0-9142-aa989bde57ed",
+        "_hitbox": "c86332b3-4b07-4d95-9510-4f1bff354fb1",
+        "Body": "c86332b3-4b07-4d95-9510-4f1bff354fb1",
+        "Eye": "2fd4f8fe-4a6d-4b24-8156-080cae5b8d77",
+        "Gravity": "0,0,800",
+        "MoveSpeed": 400,
+        "RollIntensity": 0.01,
+        "RollLerpSpeed": 7
+      },
+      {
+        "__type": "Weapon",
+        "__enabled": true,
+        "Beam": "fb2f3c82-a7f4-46c0-9142-aa989bde57ed",
+        "Splash": "69f38898-c95d-4b1b-8338-d405d620d356"
+      },
+      {
+        "__type": "SceneParticleManager",
+        "__enabled": true,
+        "Template": "assets/particles/beam.vpcf"
+      }
+    ],
+    "Children": [
+      {
+        "Id": "c86332b3-4b07-4d95-9510-4f1bff354fb1",
+        "Name": "Body",
+        "Position": "0,0,32.92603",
+        "Scale": "0.5,0.5,0.5",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "ModelRenderer",
+            "__enabled": true,
+            "BodyGroups": 18446744073709551615,
+            "MaterialGroup": null,
+            "MaterialOverride": null,
+            "Model": "models/dev/sphere.vmdl",
+            "RenderType": "On",
+            "Tint": "1,1,1,1"
+          },
+          {
+            "__type": "ManualHitbox",
+            "__enabled": true,
+            "CenterA": "0,0,0",
+            "CenterB": "0,0,0",
+            "HitboxTags": null,
+            "Radius": 34.800045,
+            "Shape": "Sphere",
+            "Target": null
+          }
+        ]
+      },
+      {
+        "Id": "2fd4f8fe-4a6d-4b24-8156-080cae5b8d77",
+        "Name": "Eyes",
+        "Position": "0,0,59.39347",
+        "Enabled": true
+      },
+      {
+        "Id": "69f38898-c95d-4b1b-8338-d405d620d356",
+        "Name": "BeamSplashes",
+        "Position": "-97.91241,123.5333,-33.04216",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "SceneParticleManager",
+            "__enabled": true,
+            "Template": "assets/particles/beam_hit.vpcf"
+          }
+        ]
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": []
+}
