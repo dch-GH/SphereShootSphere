@@ -1,4 +1,5 @@
 ﻿using Sandbox.Network;
+using System.Diagnostics.Metrics;
 using static Sandbox.Component;
 
 namespace ATMP;
@@ -11,6 +12,7 @@ public class Weapon : Component, IRenderOverlay
 	private float _gunCharge = 1.0f;
 	private float _xHairSize = 6;
 	private PlayerController _player;
+	private ClientComponent _client;
 
 	protected override void OnStart()
 	{
@@ -18,6 +20,7 @@ public class Weapon : Component, IRenderOverlay
 			return;
 
 		_player = GameObject.Components.Get<PlayerController>();
+		_client = GameObject.Components.Get<ClientComponent>();
 	}
 
 	protected override void OnUpdate()
@@ -28,7 +31,7 @@ public class Weapon : Component, IRenderOverlay
 
 			var eyes = _player.Eye.Transform.Position;
 			var fwd = _player.Cam.GameObject.Transform.LocalRotation.Forward;
-			var tr = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).UseHitboxes().Run();
+			var tr = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).WithoutTags( GameTags.LocalPlayer ).UseHitboxes().Run();
 
 			ShootEffect( eyes, tr.Hit, tr.Hit ? tr.HitPosition : eyes + fwd * 2500 );
 
@@ -36,9 +39,12 @@ public class Weapon : Component, IRenderOverlay
 				return;
 
 			var go = tr.Hitbox.GameObject;
+
+
 			if ( go.Components.TryGet<PlayerController>( out var victim ) )
 			{
-				_player.Score += 1;
+				_client.Score += 1;
+				Sound.Play( "assets/sounds/bell_01.sound" );
 				victim.Respawn();
 			}
 		}
@@ -49,6 +55,7 @@ public class Weapon : Component, IRenderOverlay
 	[Broadcast]
 	private void ShootEffect( Vector3 eye, bool traceHit, Vector3 dest )
 	{
+		Sound.Play( "assets/sounds/zap.sound", GameObject.Transform.Position );
 		if ( traceHit )
 		{
 			var splash = Splash.Spawn();

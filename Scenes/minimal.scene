@@ -94,6 +94,26 @@
           "StartServer": true
         }
       ]
+    },
+    {
+      "Id": "a889596a-4ead-497d-8d99-f25da5419a85",
+      "Name": "Screen",
+      "Position": "-2171.921,-487.5798,52.03619",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "ScreenPanel",
+          "__enabled": true,
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
+        },
+        {
+          "__type": "Scoreboard",
+          "__enabled": true
+        }
+      ]
     }
   ],
   "SceneProperties": {

@@ -8,6 +8,8 @@ namespace ATMP;
 [Icon( "electrical_services" )]
 public sealed class GameNetworkManager : Component, Component.INetworkListener, INetworkSerializable
 {
+	public static GameNetworkManager Instance;
+
 	/// <summary>
 	/// Create a server (if we're not joining one)
 	/// </summary>
@@ -30,6 +32,7 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 	protected override void OnAwake()
 	{
 		base.OnAwake();
+		Instance = this;
 
 		// Find all the legacy hammer spawns and populate the list
 		var spawns = Scene.GetAllComponents<MapObjectComponent>().Where( x => x.GameObject.Name.ToLowerInvariant().Contains( "info_player_start" ) ).ToArray();
@@ -97,8 +100,8 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 		player.Network.Spawn( channel );
 
 		var client = player.Components.GetOrCreate<ClientComponent>();
-		client.OnConnect( channel );
-		client.Pawn = player;
+		client.OnConnectHost( channel, player);
+		client.OnConnectClient( channel.Id, channel.DisplayName );
 		Clients.Add( channel.Id, client );
 	}
 
@@ -109,19 +112,6 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 			client.OnDisconnect();
 			client.Pawn.Destroy();
 			Clients.Remove( conn.Id );
-		}
-	}
-	protected override void OnUpdate()
-	{
-		base.OnUpdate();
-		if ( !GameNetworkSystem.IsHost )
-			return;
-
-		var ypos = 500;
-		foreach ( var x in Clients )
-		{
-			Gizmo.Draw.ScreenText( x.Value.ConnectionId.ToString(), new Vector2( 500, ypos ) );
-			ypos += 32;
 		}
 	}
 

@@ -1,0 +1,56 @@
+@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@inherits PanelComponent
+@attribute [StyleSheet]
+@namespace ATMP.UI
+
+<root>
+	@{
+        foreach(var client in Scene.GetAllComponents<ClientComponent>().ToArray())
+        {
+            <div>@($"Name: {client.UserName} Score: {client.Score}")</div>
+        }
+    }
+</root>
+
+<style>
+    Scoreboard {
+        opacity: 0;
+		position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 25%;
+		left: 25%;
+		right: 25%;
+        font-size: 32px;
+		align-items: center;
+        justify-content: center;
+		background-color: rgba(0, 0, 0, 0.56);
+
+        div {
+        	font-family: Arial, Helvetica, sans-serif;
+        	color: white;
+    	}
+        
+        transition: all 250ms ease-in-out;
+        &.active {
+            opacity: 1;
+        }
+
+    }
+</style>
+
+@code 
+{
+    protected override void OnUpdate()
+    {
+        base.OnUpdate();
+        SetClass("active", Input.Down(GameInputActions.Score));
+    }
+
+    protected override int BuildHash()
+    {
+        return System.HashCode.Combine(Time.Now);
+    }
+}

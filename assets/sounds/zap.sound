@@ -1,0 +1,12 @@
+{
+  "UI": false,
+  "Volume": "1.00,1.00,0",
+  "Pitch": "1.00,1.00,0",
+  "Decibels": 70,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/kenney/ui/close_003.vsnd",
+    "sounds/kenney/ui/close_002.vsnd"
+  ],
+  "__references": []
+}

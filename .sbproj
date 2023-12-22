@@ -1,9 +1,9 @@
 {
-  "Title": "woop",
+  "Title": "SceneShooter",
   "Type": "game",
-  "Org": "local",
+  "Org": "null",
   "Ident": "woop",
-  "Tags": null,
+  "Tags": "pvp shooter arena",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",

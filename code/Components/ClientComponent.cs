@@ -1,4 +1,4 @@
-﻿using System.Threading.Channels;
+﻿using Sandbox.Network;
 
 namespace ATMP;
 
@@ -9,11 +9,24 @@ public class ClientComponent : Component, INetworkSerializable
 	[Property] private Guid ConnId => ConnectionId;
 
 	public Guid ConnectionId { get; private set; }
+	public string UserName { get; private set; }
+	public int Score { get; set; }
 
-	public void OnConnect( Connection channel )
+	public void OnConnectHost(Connection channel, GameObject pawn)
 	{
-		Connection = channel;
-		ConnectionId = channel.Id;
+		if ( !GameNetworkSystem.IsHost )
+			return;
+
+		Connection = Connection;
+		Pawn = pawn;
+	}
+
+	[Broadcast]
+	public void OnConnectClient( Guid channelId, string userName)
+	{
+		Log.Info( $"OnConnectClient - {channelId} - {userName}" );
+		ConnectionId = channelId;
+		UserName = userName;
 	}
 
 	public void OnDisconnect()
@@ -21,13 +34,17 @@ public class ClientComponent : Component, INetworkSerializable
 
 	}
 
-	public void Read( ByteStream stream )
+	public void Read( ByteStream net )
 	{
-		ConnectionId = stream.Read<Guid>();
+		ConnectionId = net.Read<Guid>();
+		UserName = net.Read<string>();
+		Score = net.Read<int>();
 	}
 
-	public void Write( ref ByteStream stream )
+	public void Write( ref ByteStream net )
 	{
-		stream.Write( Connection.Id );
+		net.Write( ConnectionId );
+		net.Write( UserName );
+		net.Write( Score );
 	}
 }

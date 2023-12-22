@@ -17,7 +17,6 @@ public class PlayerController : Component, INetworkSerializable
 	public CameraComponent Cam;
 	public Vector3 WishVelocity { get; private set; }
 	public Angles EyeAngles;
-	public int Score { get; set; }
 
 	TimeSince _lastFootStep;
 	bool _wasGrounded;
@@ -30,16 +29,10 @@ public class PlayerController : Component, INetworkSerializable
 	{
 		Log.Info( $"Is Proxy: {IsProxy}, OwnerId = {Network.OwnerId}, IsOwner = {Network.IsOwner}" );
 		_hitbox.Target = GameObject;
-
 		_netMan = Scene.GetAllComponents<GameNetworkManager>().First();
 
 		if ( IsProxy )
-		{
-			Body.Components.Get<ModelRenderer>().RenderType = ModelRenderer.ShadowRenderType.On;
-			Body.Components.Get<ModelRenderer>().Tint = Color.Red;
-			Tags.Remove( GameTags.LocalPlayer );
 			return;
-		}
 
 		Cam = Scene.GetAllComponents<CameraComponent>().First();
 		Tags.Add( GameTags.LocalPlayer );
@@ -50,13 +43,23 @@ public class PlayerController : Component, INetworkSerializable
 			EyeAngles = cam.Transform.Rotation.Angles();
 			EyeAngles.roll = 0;
 		}
+	}
 
+	protected override void OnAwake()
+	{
+		base.OnAwake();
+		if ( IsProxy )
+		{
+			Body.Components.Get<ModelRenderer>().RenderType = ModelRenderer.ShadowRenderType.On;
+			Body.Components.Get<ModelRenderer>().Tint = Color.Red;
+			Tags.Remove( GameTags.LocalPlayer );
+			Body.Tags.Remove( GameTags.LocalPlayer );
+			return;
+		}
 	}
 
 	protected override void OnUpdate()
 	{
-
-
 		// Eye input
 		if ( !IsProxy )
 		{
@@ -217,12 +220,10 @@ public class PlayerController : Component, INetworkSerializable
 	public void Write( ref ByteStream net )
 	{
 		net.Write( EyeAngles );
-		net.Write( Score );
 	}
 
 	public void Read( ByteStream net )
 	{
 		EyeAngles = net.Read<Angles>();
-		Score = net.Read<int>();
 	}
 }
