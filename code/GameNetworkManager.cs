@@ -33,21 +33,6 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 	{
 		base.OnAwake();
 		Instance = this;
-
-		// Find all the legacy hammer spawns and populate the list
-		var spawns = Scene.GetAllComponents<MapObjectComponent>().Where( x => x.GameObject.Name.ToLowerInvariant().Contains( "info_player_start" ) ).ToArray();
-		foreach ( var c in spawns )
-		{
-			SpawnPoints.Add( c.GameObject );
-			SpawnPositions.Add( c.GameObject.Transform.Position );
-		}
-
-		if ( SpawnPoints.Count <= 0 )
-		{
-			var spawn = Scene.CreateObject( true );
-			spawn.Transform.Position = Transform.Position + Vector3.Up * 48f;
-			SpawnPoints.Add( spawn );
-		}
 	}
 
 	protected override async Task OnLoad()
@@ -73,6 +58,21 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 
 		if ( PlayerPrefab is null )
 			return;
+
+		// Find all the legacy hammer spawns and populate the list
+		var spawns = Scene.GetAllComponents<MapObjectComponent>().Where( x => x.GameObject.Name.ToLowerInvariant().Contains( "info_player_start" ) ).ToArray();
+		foreach ( var c in spawns )
+		{
+			SpawnPoints.Add( c.GameObject );
+			SpawnPositions.Add( c.GameObject.Transform.Position );
+		}
+
+		if ( SpawnPoints.Count <= 0 )
+		{
+			var spawn = Scene.CreateObject( true );
+			spawn.Transform.Position = Transform.Position + Vector3.Up * 48f;
+			SpawnPoints.Add( spawn );
+		}
 
 		//
 		// Find a spawn location for this player
