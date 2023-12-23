@@ -91,7 +91,9 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 
 	private async void SpawnPlayerAsync( Connection channel, Transform startLocation )
 	{
-		await GameTask.DelayRealtimeSeconds( 1 );
+		PreSpawnClient( channel.Id );
+
+		await GameTask.DelayRealtimeSeconds( 1.5f );
 
 		// Spawn this object and make the client the owner
 		var player = SceneUtility.Instantiate( PlayerPrefab, startLocation );
@@ -100,9 +102,23 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 		player.Network.Spawn( channel );
 
 		var client = player.Components.GetOrCreate<ClientComponent>();
-		client.OnConnectHost( channel, player);
+		client.OnConnectHost( channel, player );
 		client.OnConnectClient( channel.Id, channel.DisplayName );
 		Clients.Add( channel.Id, client );
+	}
+
+	[Broadcast]
+	private void PreSpawnClient( Guid channelId )
+	{
+		if ( channelId.IsReceiver() )
+		{
+			var cam = Scene.GetAllComponents<CameraComponent>().First();
+			if ( cam is not null )
+			{
+				cam.Transform.Position = new Vector3( 1445.57f, -244.278f, 699.061f );
+				cam.Transform.Rotation = Rotation.From( new Angles( 36.325f, 170.742f, 0f ) );
+			}
+		}
 	}
 
 	public void OnDisconnected( Connection conn )

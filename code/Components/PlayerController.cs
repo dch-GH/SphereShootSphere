@@ -223,7 +223,7 @@ public class PlayerController : Component, INetworkSerializable
 	public void Respawn()
 	{
 		var pos = Random.Shared.FromList( _netMan.SpawnPositions );
-		_cc.MoveTo( pos, false );
+		GameObject.Transform.Position = pos;
 	}
 
 	public void Write( ref ByteStream net )
