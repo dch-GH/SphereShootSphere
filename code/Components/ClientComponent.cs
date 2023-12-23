@@ -4,9 +4,10 @@ namespace ATMP;
 
 public class ClientComponent : Component, INetworkSerializable
 {
+	public static ClientComponent Local;
+
 	[Property] public Connection Connection { get; set; }
 	[Property] public GameObject Pawn { get; set; }
-	[Property] private Guid ConnId => ConnectionId;
 
 	public bool IsLocal => ConnectionId == Connection.Local.Id;
 	public Guid ConnectionId { get; private set; }
@@ -29,6 +30,7 @@ public class ClientComponent : Component, INetworkSerializable
 		//Log.Info( $"OnConnectClient - {channelId} - {userName}" );
 		ConnectionId = channelId;
 		UserName = userName;
+		Local = this;
 	}
 
 	public void OnDisconnect()

@@ -6,6 +6,11 @@
 @namespace ATMP.UI
 
 <root>
+    @{
+        if (_client is null)
+            return;
+    }   
+
     <div class="card">
         <div class="name">@_client.UserName</div>
     </div>
@@ -45,43 +50,27 @@
         	    font-family: Poppins;
         	    color: #fff;
         	}
-
-        	.gameobject
-        	{
-        	    color: #00ff21;
-        	    font-size: 20px;
-        	}
     	}
     }
 </style>
 
 @code
 {
-    [Property] private ClientComponent _client { get; set; }
+    private ClientComponent _client;
 
     protected override void OnStart()
     {
-        if (_client.IsHost)
+        if(IsProxy)
         {
+            _client ??= GameObject.Components.GetInParent<ClientComponent>();
+            Log.Info($"{_client.UserName} --- {_client.ConnectionId}");
             GameObject.Enabled = IsProxy;
         }
-    }
-
-    protected override void OnAwake()
-    {
-        if (!_client.IsHost)
-        {
-            GameObject.Enabled = IsProxy;
-        }
-    }
-
-    protected override void OnFixedUpdate()
-    {
-        base.OnFixedUpdate();
     }
 
     protected override int BuildHash()
     {
-        return System.HashCode.Combine(_client.UserName);
+        // return System.HashCode.Combine(_client.UserName);
+        return System.HashCode.Combine(Time.Now);
     }
 }

@@ -91,7 +91,7 @@
           "__enabled": true,
           "PlayerPrefab": "assets/prefabs/player.prefab",
           "SpawnPoints": [
-            "5cbd7750-6f88-4a7a-b3dc-a1d5a6ce94db"
+            null
           ],
           "StartServer": true
         }

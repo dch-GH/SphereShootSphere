@@ -2,6 +2,7 @@
 @using Sandbox;
 @using Sandbox.UI;
 @inherits PanelComponent
+
 @namespace ATMP.UI
 
 <root>
@@ -50,6 +51,6 @@
 
     protected override int BuildHash()
     {
-        return System.HashCode.Combine(Time.Now);
+        return System.HashCode.Combine(Input.Down(GameInputActions.Score));
     }
 }

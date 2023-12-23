@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "461dac42-e74b-49b0-8693-b4e2291458f6",
+    "Id": "16e0eb71-16a6-49a3-b4cc-ba4cbb16646a",
     "Name": "player",
     "Enabled": true,
     "Components": [
@@ -17,10 +17,10 @@
       {
         "__type": "PlayerController",
         "__enabled": true,
-        "_cc": "461dac42-e74b-49b0-8693-b4e2291458f6",
-        "_hitbox": "c50058d4-79b8-4440-a064-13bcb97f529d",
-        "Body": "c50058d4-79b8-4440-a064-13bcb97f529d",
-        "Eye": "d016ff4e-b737-47f5-8692-4be301a4b200",
+        "_cc": "16e0eb71-16a6-49a3-b4cc-ba4cbb16646a",
+        "_hitbox": "19ef975e-71eb-4f14-b0f0-80cb5d373eab",
+        "Body": "19ef975e-71eb-4f14-b0f0-80cb5d373eab",
+        "Eye": "f01d1a99-06a0-4ae1-b07c-65db3ea05e0a",
         "Gravity": "0,0,800",
         "MoveSpeed": 400,
         "RollIntensity": 0.01,
@@ -29,8 +29,8 @@
       {
         "__type": "Weapon",
         "__enabled": true,
-        "Beam": "461dac42-e74b-49b0-8693-b4e2291458f6",
-        "Splash": "9a2876f4-98e5-4c26-bf71-f86fb345b39b"
+        "Beam": "16e0eb71-16a6-49a3-b4cc-ba4cbb16646a",
+        "Splash": "aec0eb9e-0f97-4ae6-a8f4-c2c730c05586"
       },
       {
         "__type": "SceneParticleManager",
@@ -47,7 +47,7 @@
     ],
     "Children": [
       {
-        "Id": "c50058d4-79b8-4440-a064-13bcb97f529d",
+        "Id": "19ef975e-71eb-4f14-b0f0-80cb5d373eab",
         "Name": "Body",
         "Position": "0,0,32.92603",
         "Scale": "0.5,0.5,0.5",
@@ -76,13 +76,13 @@
         ]
       },
       {
-        "Id": "d016ff4e-b737-47f5-8692-4be301a4b200",
+        "Id": "f01d1a99-06a0-4ae1-b07c-65db3ea05e0a",
         "Name": "Eyes",
         "Position": "0,0,59.39347",
         "Enabled": true
       },
       {
-        "Id": "9a2876f4-98e5-4c26-bf71-f86fb345b39b",
+        "Id": "aec0eb9e-0f97-4ae6-a8f4-c2c730c05586",
         "Name": "BeamSplashes",
         "Position": "-97.91241,123.5333,-33.04216",
         "Enabled": true,
@@ -91,6 +91,27 @@
             "__type": "SceneParticleManager",
             "__enabled": true,
             "Template": "assets/particles/beam_hit.vpcf"
+          }
+        ]
+      },
+      {
+        "Id": "261135cd-cd5e-4729-8d44-08a1803f862f",
+        "Name": "Nametag",
+        "Position": "0,0,66.03888",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "WorldPanel",
+            "__enabled": true,
+            "HorizontalAlign": "Center",
+            "LookAtCamera": true,
+            "PanelSize": "512,512",
+            "RenderScale": 1,
+            "VerticalAlign": "Center"
+          },
+          {
+            "__type": "Nametag",
+            "__enabled": true
           }
         ]
       }
