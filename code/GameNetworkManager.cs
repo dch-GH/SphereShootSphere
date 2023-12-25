@@ -72,24 +72,24 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 			var spawn = Scene.CreateObject( true );
 			spawn.Transform.Position = Transform.Position + Vector3.Up * 48f;
 			SpawnPoints.Add( spawn );
+			SpawnPositions.Add( spawn.Transform.Position );
 		}
 
-		//
-		// Find a spawn location for this player
-		//
-		var startLocation = Transform.World;
+		var startLocation = Vector3.Zero;
 
 		if ( SpawnPoints is not null && SpawnPoints.Count > 0 )
 		{
-			startLocation = Random.Shared.FromList( SpawnPoints, default ).Transform.World;
+			if ( Random.Shared is null )
+				Log.Error( $"Sbox fucked up, Random.Shared is null??" );
+
+			startLocation = Random.Shared.FromList( SpawnPoints, default ).Transform.Position;
 		}
 
-		startLocation.Scale = 1;
 		//Log.Info( $"Joiner: {channel.Id}, {channel.DisplayName}, {channel.Name}, {channel.Address}" );
 		SpawnPlayerAsync( channel, startLocation );
 	}
 
-	private async void SpawnPlayerAsync( Connection channel, Transform startLocation )
+	private async void SpawnPlayerAsync( Connection channel, Vector3 startLocation )
 	{
 		PreSpawnClient( channel.Id );
 
@@ -103,7 +103,7 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 
 		var client = player.Components.GetOrCreate<ClientComponent>();
 		client.OnConnectHost( channel, player );
-		client.OnConnectClient( channel.Id, channel.DisplayName );
+		client.OnConnectClient( channel.Id, channel.DisplayName, channel.SteamId, GameNetworkSystem.IsHost );
 		Clients.Add( channel.Id, client );
 	}
 

@@ -90,9 +90,7 @@
           "__type": "GameNetworkManager",
           "__enabled": true,
           "PlayerPrefab": "assets/prefabs/player.prefab",
-          "SpawnPoints": [
-            null
-          ],
+          "SpawnPoints": [],
           "StartServer": true
         }
       ]
@@ -113,6 +111,10 @@
         },
         {
           "__type": "Scoreboard",
+          "__enabled": true
+        },
+        {
+          "__type": "HowToPlay",
           "__enabled": true
         }
       ]

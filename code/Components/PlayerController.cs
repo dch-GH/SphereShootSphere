@@ -5,7 +5,7 @@ namespace ATMP;
 
 public class PlayerController : Component, INetworkSerializable
 {
-	[Property] CharacterController _cc { get; set; }
+	[Property] public CharacterController Controller { get; private set; }
 	[Property] ManualHitbox _hitbox { get; set; }
 	[Property] public Vector3 Gravity { get; set; } = new Vector3( 0, 0, 800 );
 	[Property] private float MoveSpeed { get; set; } = 400f;
@@ -67,7 +67,7 @@ public class PlayerController : Component, INetworkSerializable
 			EyeAngles.pitch = MathX.Clamp( EyeAngles.pitch += Input.MouseDelta.y * 0.1f, -89.0f, 89.0f );
 			EyeAngles.yaw -= Input.MouseDelta.x * 0.1f;
 
-			var dot = Vector3.Dot( _cc.Velocity, Cam.GameObject.Transform.Rotation.Right ) * RollIntensity;
+			var dot = Vector3.Dot( Controller.Velocity, Cam.GameObject.Transform.Rotation.Right ) * RollIntensity;
 			if ( float.IsNaN( dot ) || (int)dot == 0 )
 				dot = 0;
 
@@ -79,7 +79,7 @@ public class PlayerController : Component, INetworkSerializable
 			Cam.Transform.Rotation = lookDir;
 		}
 
-		if ( _cc is null )
+		if ( Controller is null )
 			return;
 
 		float rotateDifference = 0;
@@ -89,7 +89,7 @@ public class PlayerController : Component, INetworkSerializable
 		{
 			var targetAngle = new Angles( 0, EyeAngles.yaw, 0 ).ToRotation();
 
-			var v = _cc.Velocity.WithZ( 0 );
+			var v = Controller.Velocity.WithZ( 0 );
 
 			if ( v.Length > 10.0f )
 			{
@@ -98,7 +98,7 @@ public class PlayerController : Component, INetworkSerializable
 
 			rotateDifference = Body.Transform.Rotation.Distance( targetAngle );
 
-			if ( rotateDifference > 50.0f || _cc.Velocity.Length > 10.0f )
+			if ( rotateDifference > 50.0f || Controller.Velocity.Length > 10.0f )
 			{
 				Body.Transform.Rotation = Rotation.Lerp( Body.Transform.Rotation, targetAngle, Time.Delta * 2.0f );
 			}
@@ -118,7 +118,7 @@ public class PlayerController : Component, INetworkSerializable
 	protected override void OnFixedUpdate()
 	{
 		// Footstep sounds
-		if ( _cc.Velocity.WithZ( 0 ).Length >= 200f && _cc.IsOnGround && _lastFootStep > 0.31f )
+		if ( Controller.Velocity.WithZ( 0 ).Length >= 200f && Controller.IsOnGround && _lastFootStep > 0.31f )
 		{
 			if ( TryGetSurfaceTrace( out var tr ) )
 			{
@@ -129,7 +129,7 @@ public class PlayerController : Component, INetworkSerializable
 		}
 
 		// Landing sound
-		if ( !_wasGrounded && _cc.IsOnGround )
+		if ( !_wasGrounded && Controller.IsOnGround )
 		{
 			if ( TryGetSurfaceTrace( out var tr ) )
 			{
@@ -138,7 +138,7 @@ public class PlayerController : Component, INetworkSerializable
 			}
 		}
 
-		_wasGrounded = _cc.IsOnGround;
+		_wasGrounded = Controller.IsOnGround;
 
 		if ( IsProxy )
 			return;
@@ -148,38 +148,38 @@ public class PlayerController : Component, INetworkSerializable
 
 		BuildWishVelocity();
 
-		if ( _cc.IsOnGround && Input.Down( "Jump" ) )
+		if ( Controller.IsOnGround && Input.Down( "Jump" ) )
 		{
 			float flGroundFactor = 1.0f;
 			float flMul = 250;
 
-			_cc.Punch( Vector3.Up * flMul * flGroundFactor );
+			Controller.Punch( Vector3.Up * flMul * flGroundFactor );
 
 			OnJump();
 		}
 
-		if ( _cc.IsOnGround )
+		if ( Controller.IsOnGround )
 		{
-			_cc.Velocity = _cc.Velocity.WithZ( 0 );
-			_cc.Accelerate( WishVelocity );
-			_cc.ApplyFriction( 4.0f );
+			Controller.Velocity = Controller.Velocity.WithZ( 0 );
+			Controller.Accelerate( WishVelocity );
+			Controller.ApplyFriction( 4.0f );
 		}
 		else
 		{
-			_cc.Velocity -= Gravity * Time.Delta * 0.5f;
-			_cc.Accelerate( WishVelocity / 2 );
-			_cc.ApplyFriction( 0.1f );
+			Controller.Velocity -= Gravity * Time.Delta * 0.5f;
+			Controller.Accelerate( WishVelocity / 2 );
+			Controller.ApplyFriction( 0.1f );
 		}
 
-		_cc.Move();
+		Controller.Move();
 
-		if ( !_cc.IsOnGround )
+		if ( !Controller.IsOnGround )
 		{
-			_cc.Velocity -= Gravity * Time.Delta * 0.5f;
+			Controller.Velocity -= Gravity * Time.Delta * 0.5f;
 		}
 		else
 		{
-			_cc.Velocity = _cc.Velocity.WithZ( 0 );
+			Controller.Velocity = Controller.Velocity.WithZ( 0 );
 		}
 	}
 

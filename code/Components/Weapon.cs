@@ -23,15 +23,21 @@ public class Weapon : Component, IRenderOverlay
 
 	protected override void OnUpdate()
 	{
-		if ( !IsProxy && Input.Pressed( GameInputActions.PrimaryAttack ) && _gunCharge >= 1.0f )
+		if ( !IsProxy && (Input.Pressed( GameInputActions.PrimaryAttack ) || Input.Down( GameInputActions.PrimaryAttack )) && _gunCharge >= 1.0f )
 		{
 			_gunCharge = 0.0f;
 
 			var eyes = _player.Eye.Transform.Position;
 			var fwd = _player.Cam.GameObject.Transform.LocalRotation.Forward;
-			var tr = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).WithoutTags(GameTags.LocalPlayer).UseHitboxes().Run();
+			var tr = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).WithoutTags( GameTags.LocalPlayer ).UseHitboxes().Run();
 
 			ShootEffect( eyes, tr.Hit, tr.Hit ? tr.HitPosition : eyes + fwd * 2500 );
+			
+			// Rocket jump
+			if ( tr.Hit && tr.Distance <= 128 && tr.Hitbox is null )
+			{
+				_player.Controller.Punch( -fwd * 420 );
+			}
 
 			if ( !tr.Hit || tr.Hitbox is null )
 				return;
@@ -80,7 +86,7 @@ public class Weapon : Component, IRenderOverlay
 			var x = Screen.Width / 3;
 			var y = Screen.Height - height;
 			var mapped = MathX.Remap( _gunCharge, 0.0f, 1.0f, x, Screen.Width - Screen.Width / 3 );
-			Draw2D.Line( Color.White, height, new Vector2( x, y ), new Vector2( mapped, y ) );
+			Draw2D.Line( _gunCharge < 1.0f ? Color.White.WithAlpha(0.3f) : Color.Green.Darken(0.15f).WithAlpha( 0.6f ), height, new Vector2( x, y ), new Vector2( mapped, y ) );
 		}
 	}
 }

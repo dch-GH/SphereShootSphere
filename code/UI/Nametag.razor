@@ -12,7 +12,7 @@
     }   
 
     <div class="card">
-        <div class="name">@_client.UserName</div>
+        <label class="name">@_client.UserName</label>
     </div>
 </root>
 
@@ -27,30 +27,31 @@
         justify-content: center;
         align-items: center;
         font-weight: bold;
+        div
 
-        div {
-            font-family: Arial, Helvetica, sans-serif;
-            color: white;
-        }
+    {
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+    }
 
-		.card
-    	{
-        	flex-direction: column;
-        	background-color: #0008;
-        	border-radius: 5px;
-        	overflow: hidden;
-        	padding: 10px 20px;
-        	justify-content: center;
-        	align-items: center;
-        	gap: 20px;
+    .card {
+        flex-direction: column;
+        background-color: #0008;
+        border-radius: 5px;
+        overflow: hidden;
+        padding: 10px 20px;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        .name
 
-        	.name
-        	{
-        	    font-size: 25px;
-        	    font-family: Poppins;
-        	    color: #fff;
-        	}
-    	}
+    {
+        font-size: 25px;
+        font-family: Poppins;
+        color: #fff;
+    }
+
+    }
     }
 </style>
 

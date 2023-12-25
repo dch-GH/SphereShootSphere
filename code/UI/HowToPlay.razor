@@ -6,32 +6,33 @@
 @namespace ATMP.UI
 
 <root>
-    <label class="title">Scoreboard</label>
+    <label class="title">How To Play</label>
     <div class="hr"></div>
     <div class="inner">
-        @{
-            foreach (var client in Scene.GetAllComponents<ClientComponent>().ToArray())
-            {
-                <ScoreboardItem Client=@client></ScoreboardItem>
-            }
-        }
+        <label>@($"Hold {Input.GetButtonOrigin(GameInputActions.Jump).ToUpperInvariant()} to bunnyhop")</label>
+        <label>Shoot the ground below you to rocket jump</label>
+        <label>@($"Hold {Input.GetButtonOrigin(GameInputActions.Score).ToUpperInvariant()} to check score")</label>
     </div>
 </root>
 <style>
-    Scoreboard {
+    HowToPlay {
         opacity: 0;
         position: absolute;
         display: flex;
         flex-direction: column;
-        top: 25%;
-        left: 25%;
-        right: 25%;
+        left: 4%;
+        bottom: 4%;
         font-size: 32px;
         align-items: center;
         justify-content: center;
         background-color: rgba(0, 0, 0, 0.56);
         color: white;
-        transition: all 250ms ease-in-out;
+        transition: all 5s ease-in-out;
+        
+        width: 600px;
+        height: auto;
+        padding: 15px;
+
         &.active
 
     {
@@ -61,9 +62,16 @@
 </style>
 @code
 {
+    private RealTimeSince _sinceStart;
+
+    protected override void OnStart()
+    {
+        _sinceStart = 0;
+    }
+
     protected override void OnUpdate()
     {
-        SetClass("active", Input.Down(GameInputActions.Score));
+        SetClass("active", _sinceStart <= 10);
     }
 
     protected override int BuildHash()

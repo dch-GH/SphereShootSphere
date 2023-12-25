@@ -1,0 +1,52 @@
+﻿@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Panel
+
+@namespace ATMP.UI
+
+<root>
+    <div class="player-info">
+        @{
+            if(Client.Host)
+                <label style="font-size: 20px;">🛜</label>
+        }
+        <img class="avatar" src="avatar:@(Client.SteamId)" style="width:32px; height:32px; border-radius: 16px; margin-left: 12px;" />
+        <label>@Client.UserName</label>
+    </div>
+    <label class="score-amount">@($"{Client.Score}")</label>
+</root>
+
+<style>
+    ScoreboardItem {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 3;
+        gap: 5%;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        margin-bottom: 8px;
+        font-family: Arial;
+        font-weight: bold;
+
+        .player-info {
+            width: 100%;
+            text-align: center;
+            align-items: center;
+
+            label {
+                padding-left: 8px;
+                text-overflow: ellipsis;
+            }
+        }
+        
+        .score-amount {
+            font-family: Courier New;
+        }
+    }
+</style>
+
+@code {
+    public ClientComponent Client { get; set; }
+}
