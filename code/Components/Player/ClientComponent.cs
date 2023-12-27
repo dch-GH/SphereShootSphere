@@ -1,4 +1,5 @@
 ﻿using Sandbox.Network;
+using System.Threading.Tasks;
 
 namespace ATMP;
 
@@ -29,6 +30,7 @@ public class ClientComponent : Component, INetworkSerializable
 	[Broadcast]
 	public void OnConnectClient( Guid channelId, string userName, ulong steamId, bool isHost )
 	{
+		Chat.Current?.AddEntry( userName, $"has joined the game.", steamId, true);
 		//Log.Info( $"OnConnectClient - {channelId} - {userName}" );
 		ConnectionId = channelId;
 		UserName = userName;
@@ -37,9 +39,10 @@ public class ClientComponent : Component, INetworkSerializable
 		Local = this;
 	}
 
-	public void OnDisconnect()
+	[Broadcast]
+	public void OnDisconnectClient( Guid channelId, string userName, ulong steamId, bool isHost )
 	{
-
+		Chat.Current?.AddEntry( userName, $"has left the game.", steamId, true);
 	}
 
 	public void Read( ByteStream net )

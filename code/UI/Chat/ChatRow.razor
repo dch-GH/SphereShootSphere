@@ -25,5 +25,12 @@
     public string Name { get; set; }
     public string Message { get; set; }
     public ulong PlayerId { get; set; }
-    public TimeSince Lifetime { get; init; } = 0;
+
+    // lol the TimeSince version broke
+    public float Lifetime { get; set; }
+
+    public override void Tick()
+    {
+        Lifetime += Time.Delta;
+    }
 }

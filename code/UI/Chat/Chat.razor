@@ -32,6 +32,7 @@
         pointer-events: none;
         transition: all 0.1s ease, border 0s ease;
         padding: 18px;
+        transform: skewY(-3);
         textentry
 
     {
@@ -104,7 +105,8 @@
         .header, .msg
 
     {
-        color: darken(#c0cee7, 20%);
+        color: gold;
+        font-weight: bold;
     }
 
     }
@@ -199,6 +201,8 @@
     protected override void OnAfterTreeRender(bool firstTime)
     {
         base.OnAfterTreeRender(firstTime);
+        if(firstTime)
+            Current?.AddEntry("Server", "Hi :)", 0, true);
 
         Canvas.PreferScrollToBottom = true;
         Input.AcceptsFocus = true;
@@ -254,7 +258,6 @@
 
         e.Message = message;
         e.Name = $"{name}";
-
         e.SetClass("noname", string.IsNullOrEmpty(name));
         e.SetClass("info", isInfo);
         e.BindClass("stale", () => e.Lifetime > MessageLifetime);

@@ -18,6 +18,8 @@
     </div>
 </root>
 <style>
+    $rounding: 4px;
+    $blue: #3273eb;
     Scoreboard {
         opacity: 0;
         position: absolute;
@@ -29,7 +31,8 @@
         font-size: 32px;
         align-items: center;
         justify-content: center;
-        background-color: rgba(0, 0, 0, 0.56);
+        background-image: linear-gradient(to bottom, rgba(#080813, 0.9), rgba(#1c1c38, 0.55), rgba(#1c1c38, 0.1));
+        border-radius: $rounding $rounding 0 0;
         color: white;
         transition: all 250ms ease-in-out;
         &.active

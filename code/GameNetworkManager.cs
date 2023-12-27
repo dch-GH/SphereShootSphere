@@ -103,7 +103,7 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 
 		var client = player.Components.GetOrCreate<ClientComponent>();
 		client.OnConnectHost( channel, player );
-		client.OnConnectClient( channel.Id, channel.DisplayName, channel.SteamId, GameNetworkSystem.IsHost );
+		client.OnConnectClient( channel.Id, channel.DisplayName, channel.SteamId, channel.IsHost);
 		Clients.Add( channel.Id, client );
 	}
 
@@ -125,7 +125,7 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 	{
 		if ( Clients.TryGetValue( conn.Id, out var client ) )
 		{
-			client.OnDisconnect();
+			client.OnDisconnectClient(conn.Id, conn.DisplayName, conn.SteamId, conn.IsHost);
 			client.Pawn.Destroy();
 			Clients.Remove( conn.Id );
 		}
