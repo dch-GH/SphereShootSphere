@@ -1,7 +1,7 @@
 @using System;
 @using Sandbox;
 @using Sandbox.UI;
-@inherits PanelComponent
+@inherits Panel
 
 @namespace ATMP.UI
 
@@ -10,7 +10,7 @@
     <div class="hr"></div>
     <div class="inner">
         @{
-            foreach (var client in Scene.GetAllComponents<ClientComponent>().ToArray())
+            foreach (var client in Hud.Instance.Scene.GetAllComponents<ClientComponent>().ToArray())
             {
                 <ScoreboardItem Client=@client></ScoreboardItem>
             }
@@ -61,7 +61,7 @@
 </style>
 @code
 {
-    protected override void OnUpdate()
+    public override void Tick()
     {
         SetClass("active", Input.Down(GameInputActions.Score));
     }

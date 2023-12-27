@@ -8,7 +8,6 @@ public class Weapon : Component, IRenderOverlay
 	[Property] public SceneParticleManager Splash { get; set; }
 
 	private float _gunCharge = 1.0f;
-	private float _xHairSize = 6;
 	private PlayerController _player;
 	private ClientComponent _client;
 
@@ -32,7 +31,7 @@ public class Weapon : Component, IRenderOverlay
 			var tr = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).WithoutTags( GameTags.LocalPlayer ).UseHitboxes().Run();
 
 			ShootEffect( eyes, tr.Hit, tr.Hit ? tr.HitPosition : eyes + fwd * 2500 );
-			
+
 			// Rocket jump
 			if ( tr.Hit && tr.Distance <= 128 && tr.Hitbox is null )
 			{
@@ -79,14 +78,10 @@ public class Weapon : Component, IRenderOverlay
 			return;
 
 		var canShoot = _gunCharge >= 1.0f;
-		Draw2D.Circle( Screen.Size / 2, outerRadius: _xHairSize, innerRadius: _xHairSize - 2, color: canShoot ? Color.White.WithAlpha( 0.9f ) : Color.White.Darken( 0.25f ), pointCount: 64 );
-
-		{
-			const int height = 24;
-			var x = Screen.Width / 3;
-			var y = Screen.Height - height;
-			var mapped = MathX.Remap( _gunCharge, 0.0f, 1.0f, x, Screen.Width - Screen.Width / 3 );
-			Draw2D.Line( _gunCharge < 1.0f ? Color.White.WithAlpha(0.3f) : Color.Green.Darken(0.15f).WithAlpha( 0.6f ), height, new Vector2( x, y ), new Vector2( mapped, y ) );
-		}
+		const int height = 24;
+		var x = Screen.Width / 3;
+		var y = Screen.Height - height;
+		var mapped = MathX.Remap( _gunCharge, 0.0f, 1.0f, x, Screen.Width - Screen.Width / 3 );
+		Draw2D.Line( !canShoot ? Color.White.WithAlpha( 0.3f ) : Color.Green.Darken( 0.15f ).WithAlpha( 0.6f ), height, new Vector2( x, y ), new Vector2( mapped, y ) );
 	}
 }

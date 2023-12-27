@@ -1,7 +1,7 @@
 @using System;
 @using Sandbox;
 @using Sandbox.UI;
-@inherits PanelComponent
+@inherits Panel
 
 @namespace ATMP.UI
 
@@ -20,14 +20,15 @@
         position: absolute;
         display: flex;
         flex-direction: column;
-        left: 4%;
-        bottom: 4%;
+        right: 3%;
+        bottom: 6%;
         font-size: 32px;
         align-items: center;
         justify-content: center;
         background-color: rgba(0, 0, 0, 0.56);
         color: white;
         transition: all 5s ease-in-out;
+        font-family: Roboto;
         
         width: 600px;
         height: auto;
@@ -64,12 +65,12 @@
 {
     private RealTimeSince _sinceStart;
 
-    protected override void OnStart()
+    public HowToPlay()
     {
         _sinceStart = 0;
     }
 
-    protected override void OnUpdate()
+    public override void Tick()
     {
         SetClass("active", _sinceStart <= 10);
     }

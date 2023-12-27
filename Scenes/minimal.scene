@@ -66,20 +66,6 @@
       ]
     },
     {
-      "Id": "571b240c-f6ee-4a81-af44-72afcb807186",
-      "Name": "Map",
-      "Position": "258.808,26.26291,158.8789",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "MapInstance",
-          "__enabled": true,
-          "MapName": "monkestudio.ttt_crossroads"
-        }
-      ],
-      "Children": []
-    },
-    {
       "Id": "2c2cdde2-471c-4900-a57f-2478cbf90559",
       "Name": "NetworkManager",
       "Position": "-2171.921,-487.5798,52.03619",
@@ -96,9 +82,22 @@
       ]
     },
     {
-      "Id": "a889596a-4ead-497d-8d99-f25da5419a85",
+      "Id": "571b240c-f6ee-4a81-af44-72afcb807186",
+      "Name": "Map",
+      "Position": "258.808,26.26291,158.8789",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "MapInstance",
+          "__enabled": true,
+          "MapName": "monkestudio.ttt_crossroads"
+        }
+      ]
+    },
+    {
+      "Id": "cd085eaf-b9bb-4f66-b8cf-a6d4a03a8173",
       "Name": "Screen",
-      "Position": "-2171.921,-487.5798,52.03619",
+      "Position": "1358.146,-401.0975,688.9261",
       "Enabled": true,
       "Components": [
         {
@@ -110,11 +109,7 @@
           "ZIndex": 100
         },
         {
-          "__type": "Scoreboard",
-          "__enabled": true
-        },
-        {
-          "__type": "HowToPlay",
+          "__type": "Hud",
           "__enabled": true
         }
       ]

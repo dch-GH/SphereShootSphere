@@ -57,6 +57,10 @@ public class PlayerController : Component, INetworkSerializable
 		{
 			SetupProxy();
 		}
+		else
+		{
+			LocalPlayer.Pawn = GameObject;
+		}
 	}
 
 	protected override void OnUpdate()
@@ -185,8 +189,11 @@ public class PlayerController : Component, INetworkSerializable
 
 	private void SetupProxy()
 	{
-		Body.Components.Get<ModelRenderer>().RenderType = ModelRenderer.ShadowRenderType.On;
-		Body.Components.Get<ModelRenderer>().Tint = Color.Red;
+		if ( Body.Components.TryGet<ModelRenderer>( out var modelRenderer ) )
+		{
+			modelRenderer.RenderType = ModelRenderer.ShadowRenderType.On;
+			modelRenderer.Tint = Color.Red;
+		}
 		Tags.Remove( GameTags.LocalPlayer );
 		Body.Tags.Remove( GameTags.LocalPlayer );
 	}

@@ -1,0 +1,33 @@
+﻿@using Sandbox;
+@using Sandbox.UI;
+
+@namespace ATMP.UI
+@inherits Panel
+
+@code
+{
+}
+
+<root>
+    <style>
+        crosshair {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            left: 50%;
+            top: 50%;
+            margin-top: -4px;
+            margin-left: -4px;
+            border-width: 1px;
+            border-color: white;
+            border-radius: 2px;
+            backdrop-filter: invert(100%);
+            opacity: 1;
+
+            &.hidden
+            {
+                opacity: 0;
+            }
+        }
+    </style>
+</root>
