@@ -30,6 +30,7 @@ public class ClientComponent : Component, INetworkSerializable
 	[Broadcast]
 	public void OnConnectClient( Guid channelId, string userName, ulong steamId, bool isHost )
 	{
+		LocalPlayer.OnSpawned?.Invoke(GameObject);
 		Chat.Current?.AddEntry( userName, $"has joined the game.", steamId, true);
 		//Log.Info( $"OnConnectClient - {channelId} - {userName}" );
 		ConnectionId = channelId;

@@ -13,6 +13,7 @@ public class PlayerController : Component, INetworkSerializable
 	[Property] public GameObject Eye { get; set; }
 	[Property] private float RollIntensity { get; set; } = 0.05f;
 	[Property] private float RollLerpSpeed { get; set; } = 1;
+	[Property] public List<Material> PlayerMaterials { get; set; }
 
 	public CameraComponent Cam;
 	public Vector3 WishVelocity { get; private set; }
@@ -37,7 +38,10 @@ public class PlayerController : Component, INetworkSerializable
 		else
 		{
 			Tags.Add( GameTags.LocalPlayer );
-			Body.Components.Get<ModelRenderer>().RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+
+			var modelRenderer = Body.Components.Get<ModelRenderer>();
+			modelRenderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+			LocalPlayer.Pawn = GameObject;
 		}
 
 		_netMan = Scene.GetAllComponents<GameNetworkManager>().First();
@@ -191,8 +195,8 @@ public class PlayerController : Component, INetworkSerializable
 	{
 		if ( Body.Components.TryGet<ModelRenderer>( out var modelRenderer ) )
 		{
+			modelRenderer.MaterialOverride = Random.Shared.FromList( PlayerMaterials );
 			modelRenderer.RenderType = ModelRenderer.ShadowRenderType.On;
-			modelRenderer.Tint = Color.Red;
 		}
 		Tags.Remove( GameTags.LocalPlayer );
 		Body.Tags.Remove( GameTags.LocalPlayer );
