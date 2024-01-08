@@ -8,9 +8,6 @@ public partial class Chat
 		// Again in the RPC.
 		message = message.RemoveBadCharacters();
 
-		if ( Rpc.Caller.SteamId != steamId )
-			return;
-
 		Current?.AddEntry( name, message, steamId, isInfo );
 		Log.Info( $"{name}: {message}" );
 	}

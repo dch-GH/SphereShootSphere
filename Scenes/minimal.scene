@@ -92,7 +92,8 @@
           "__enabled": true,
           "MapName": "monkestudio.ttt_crossroads"
         }
-      ]
+      ],
+      "Children": []
     },
     {
       "Id": "cd085eaf-b9bb-4f66-b8cf-a6d4a03a8173",

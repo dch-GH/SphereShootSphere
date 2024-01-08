@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "a32f7dc4-2ffe-4016-ac28-ccdde34d1679",
+    "Id": "de8171cd-ba57-4fce-bc91-f9d2f55862e4",
     "Name": "player",
     "Enabled": true,
     "Components": [
@@ -17,10 +17,10 @@
       {
         "__type": "PlayerController",
         "__enabled": true,
-        "_hitbox": "018d28e3-5c6e-4de6-baf5-c8df6b78514c",
-        "Body": "018d28e3-5c6e-4de6-baf5-c8df6b78514c",
-        "Controller": "a32f7dc4-2ffe-4016-ac28-ccdde34d1679",
-        "Eye": "4a56cd93-9d46-489c-814a-5a4ffb7fe7a3",
+        "_hitbox": "7937b4e9-9311-4ee5-a4d6-c49af14bc8de",
+        "Body": "7937b4e9-9311-4ee5-a4d6-c49af14bc8de",
+        "Controller": "de8171cd-ba57-4fce-bc91-f9d2f55862e4",
+        "Eye": "e8f2f47d-04e5-4598-811d-c0ae346d91b2",
         "Gravity": "0,0,800",
         "MoveSpeed": 400,
         "PlayerMaterials": [
@@ -34,8 +34,8 @@
       {
         "__type": "Weapon",
         "__enabled": true,
-        "Beam": "a32f7dc4-2ffe-4016-ac28-ccdde34d1679",
-        "Splash": "fd202d51-74c5-4cd3-a881-f528ea40d95b"
+        "Beam": "de8171cd-ba57-4fce-bc91-f9d2f55862e4",
+        "Splash": "1a727c3b-8bc2-407d-b3ae-5252461f6bcc"
       },
       {
         "__type": "SceneParticleManager",
@@ -51,7 +51,7 @@
     ],
     "Children": [
       {
-        "Id": "018d28e3-5c6e-4de6-baf5-c8df6b78514c",
+        "Id": "7937b4e9-9311-4ee5-a4d6-c49af14bc8de",
         "Name": "Body",
         "Position": "0,0,33.96304",
         "Scale": "0.5,0.5,0.5",
@@ -62,7 +62,7 @@
             "__enabled": true,
             "BodyGroups": 18446744073709551615,
             "MaterialGroup": null,
-            "MaterialOverride": null,
+            "MaterialOverride": "assets/materials/player_nerd.vmat",
             "Model": "models/dev/sphere.vmdl",
             "RenderType": "On",
             "Tint": "1,1,1,1"
@@ -80,13 +80,13 @@
         ]
       },
       {
-        "Id": "4a56cd93-9d46-489c-814a-5a4ffb7fe7a3",
+        "Id": "e8f2f47d-04e5-4598-811d-c0ae346d91b2",
         "Name": "Eyes",
         "Position": "0,0,59.39347",
         "Enabled": true
       },
       {
-        "Id": "fd202d51-74c5-4cd3-a881-f528ea40d95b",
+        "Id": "1a727c3b-8bc2-407d-b3ae-5252461f6bcc",
         "Name": "BeamSplashes",
         "Position": "-97.91241,123.5333,-33.04216",
         "Enabled": true,
@@ -99,7 +99,7 @@
         ]
       },
       {
-        "Id": "8e18fc9d-5b67-4408-971a-d5fe13fec446",
+        "Id": "b5dd53fc-1725-48e6-abc0-9d6684b084bd",
         "Name": "Nametag",
         "Position": "0,0,66.03888",
         "Enabled": true,
