@@ -27,7 +27,8 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 	[Property] public List<GameObject> SpawnPoints { get; set; }
 	public List<Vector3> SpawnPositions { get; private set; } = new();
 
-	public Dictionary<Guid, ClientComponent> Clients { get; private set; }
+	public Dictionary<Connection, ClientComponent> Clients { get; private set; }
+	RealTimeSince sincePingUpdate;
 
 	protected override void OnAwake()
 	{
@@ -102,9 +103,9 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 		player.Network.Spawn( channel );
 
 		var client = player.Components.GetOrCreate<ClientComponent>();
+		Clients.Add( channel, client );
 		client.OnConnectHost( channel, player );
-		client.OnConnectClient( channel.Id, channel.DisplayName, channel.SteamId, channel.IsHost);
-		Clients.Add( channel.Id, client );
+		client.OnConnectClient( channel.Id, channel.DisplayName, channel.SteamId );
 	}
 
 	[Broadcast]
@@ -123,12 +124,28 @@ public sealed class GameNetworkManager : Component, Component.INetworkListener, 
 
 	public void OnDisconnected( Connection conn )
 	{
-		if ( Clients.TryGetValue( conn.Id, out var client ) )
+		if ( Clients.TryGetValue( conn, out var client ) )
 		{
-			client.OnDisconnectClient(conn.Id, conn.DisplayName, conn.SteamId, conn.IsHost);
+			client.OnDisconnectClient( conn.Id, conn.DisplayName, conn.SteamId, conn.IsHost );
 			client.Pawn.Destroy();
-			Clients.Remove( conn.Id );
+			Clients.Remove( conn );
 		}
+	}
+
+	protected override void OnFixedUpdate()
+	{
+		if ( !GameNetworkSystem.IsHost )
+			return;
+
+		if ( sincePingUpdate < 1 )
+			return;
+
+		foreach ( var (conn, client) in Clients )
+		{
+			client.UpdatePingClient( conn.Id, conn.Ping );
+		}
+
+		sincePingUpdate = 0;
 	}
 
 	public void Write( ref ByteStream net )

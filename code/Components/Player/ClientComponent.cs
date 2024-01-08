@@ -4,8 +4,6 @@ namespace ATMP;
 
 public class ClientComponent : Component, INetworkSerializable
 {
-	public static ClientComponent Local;
-
 	[Property] public Connection Connection { get; set; }
 	[Property] public GameObject Pawn { get; set; }
 
@@ -15,7 +13,7 @@ public class ClientComponent : Component, INetworkSerializable
 	public int Score { get; set; }
 	public ulong SteamId { get; private set; }
 	public bool Host { get; private set; }
-	public bool IsHost => GameNetworkSystem.IsHost;
+	public short Ping { get; private set; }
 
 	public void OnConnectHost( Connection channel, GameObject pawn )
 	{
@@ -27,22 +25,31 @@ public class ClientComponent : Component, INetworkSerializable
 	}
 
 	[Broadcast]
-	public void OnConnectClient( Guid channelId, string userName, ulong steamId, bool isHost )
+	public void OnConnectClient( Guid channelId, string userName, ulong steamId )
 	{
-		LocalPlayer.OnSpawned?.Invoke(GameObject);
-		Chat.Current?.AddEntry( userName, $"has joined the game.", steamId, true);
+		LocalPlayer.OnSpawned?.Invoke( GameObject );
+		Chat.Current?.AddEntry( userName, $"has joined the game.", steamId, true );
 		//Log.Info( $"OnConnectClient - {channelId} - {userName}" );
 		ConnectionId = channelId;
 		UserName = userName;
 		SteamId = steamId;
-		Host = isHost;
-		Local = this;
+		Host = GameNetworkSystem.IsHost;
+		LocalPlayer.Client = this;
 	}
 
 	[Broadcast]
 	public void OnDisconnectClient( Guid channelId, string userName, ulong steamId, bool isHost )
 	{
-		Chat.Current?.AddEntry( userName, $"has left the game.", steamId, true);
+		Chat.Current?.AddEntry( userName, $"has left the game.", steamId, true );
+	}
+
+	[Broadcast]
+	public void UpdatePingClient( Guid client, float ping )
+	{
+		if ( ConnectionId != client )
+			return;
+
+		Ping = (short)(ping.FloorToInt());
 	}
 
 	public void Read( ByteStream net )
@@ -52,6 +59,7 @@ public class ClientComponent : Component, INetworkSerializable
 		Score = net.Read<int>();
 		SteamId = net.Read<ulong>();
 		Host = net.Read<bool>();
+		Ping = net.Read<short>();
 	}
 
 	public void Write( ref ByteStream net )
@@ -60,6 +68,7 @@ public class ClientComponent : Component, INetworkSerializable
 		net.Write( UserName );
 		net.Write( Score );
 		net.Write( SteamId );
-		net.Write( Host );
+		net.Write( GameNetworkSystem.IsHost );
+		net.Write( Ping );
 	}
 }
