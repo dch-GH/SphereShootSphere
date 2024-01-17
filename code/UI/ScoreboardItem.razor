@@ -8,7 +8,6 @@
 <root>
     <div class="player-info">
         @{
-            Log.Info($"{Client.ConnectionId} : {Client.Host}");
             if(Client.Host)
             {
                 <label style="font-size: 20px;">🌐</label>
@@ -68,6 +67,6 @@
 
     protected override int BuildHash()
     {
-        return System.HashCode.Combine(Input.Down(GameInputActions.Score), Client.Ping);
+        return System.HashCode.Combine(Input.Down(GameInputActions.Score), Client.Score, Client.Ping);
     }
 } 

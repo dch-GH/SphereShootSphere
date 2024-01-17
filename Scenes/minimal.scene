@@ -8,6 +8,7 @@
       "Enabled": true,
       "Components": [
         {
+          "__version": 0,
           "__type": "DirectionalLight",
           "__enabled": true,
           "LightColor": "0.91373,0.98039,1,1",
@@ -22,12 +23,14 @@
       "Enabled": true,
       "Components": [
         {
+          "__version": 0,
           "__type": "SkyBox2D",
           "__enabled": true,
           "SkyMaterial": "materials/skybox/light_test_sky_sunny02.vmat",
           "Tint": "1,1,1,1"
         },
         {
+          "__version": 0,
           "__type": "EnvmapProbe",
           "__enabled": true,
           "Bounds": {
@@ -49,6 +52,7 @@
       "Enabled": true,
       "Components": [
         {
+          "__version": 0,
           "__type": "CameraComponent",
           "__enabled": true,
           "BackgroundColor": "0.33333,0.46275,0.52157,1",
@@ -68,28 +72,13 @@
       ]
     },
     {
-      "Id": "2c2cdde2-471c-4900-a57f-2478cbf90559",
-      "Name": "NetworkManager",
-      "Position": "-2171.921,-487.5798,52.03619",
-      "Networked": true,
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "GameNetworkManager",
-          "__enabled": true,
-          "PlayerPrefab": "assets/prefabs/player.prefab",
-          "SpawnPoints": [],
-          "StartServer": true
-        }
-      ]
-    },
-    {
       "Id": "571b240c-f6ee-4a81-af44-72afcb807186",
       "Name": "Map",
       "Position": "258.808,26.26291,158.8789",
       "Enabled": true,
       "Components": [
         {
+          "__version": 0,
           "__type": "MapInstance",
           "__enabled": true,
           "MapName": "monkestudio.ttt_crossroads",
@@ -107,6 +96,7 @@
       "Enabled": true,
       "Components": [
         {
+          "__version": 0,
           "__type": "ScreenPanel",
           "__enabled": true,
           "AutoScreenScale": true,
@@ -115,8 +105,24 @@
           "ZIndex": 100
         },
         {
+          "__version": 0,
           "__type": "Hud",
           "__enabled": true
+        }
+      ]
+    },
+    {
+      "Id": "b9318680-3e5e-4ca6-ae6f-e2bd0456777d",
+      "Name": "GameNetwork",
+      "Enabled": true,
+      "Components": [
+        {
+          "__version": 0,
+          "__type": "GameNetwork",
+          "__enabled": true,
+          "PlayerPrefab": "assets/prefabs/player.prefab",
+          "SpawnPoints": [],
+          "StartServer": true
         }
       ]
     }

@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace ATMP;
 
-public class PlayerController : Component, INetworkSerializable
+public class PlayerController : Component
 {
 	[Property] public CharacterController Controller { get; private set; }
 	[Property] ManualHitbox _hitbox { get; set; }
@@ -17,12 +17,17 @@ public class PlayerController : Component, INetworkSerializable
 
 	public CameraComponent Cam;
 	public Vector3 WishVelocity { get; private set; }
-	public Angles EyeAngles;
+	private Angles _eyeAngles;
+	[Sync( Query = true )]
+	public Angles EyeAngles
+	{
+		get { return _eyeAngles; }
+		set { _eyeAngles = value; }
+	}
 
 	TimeSince _lastFootStep;
 	bool _wasGrounded;
 	float _footstepVolume = 4;
-	GameNetworkManager _netMan;
 
 	protected override void OnStart()
 	{
@@ -44,12 +49,11 @@ public class PlayerController : Component, INetworkSerializable
 			LocalPlayer.Pawn = GameObject;
 		}
 
-		_netMan = Scene.GetAllComponents<GameNetworkManager>().First();
 		Cam = Scene.GetAllComponents<CameraComponent>().First();
 		if ( Cam is not null )
 		{
-			EyeAngles = Cam.Transform.Rotation.Angles();
-			EyeAngles.roll = 0;
+			_eyeAngles = Cam.Transform.Rotation.Angles();
+			_eyeAngles.roll = 0;
 		}
 	}
 
@@ -72,16 +76,16 @@ public class PlayerController : Component, INetworkSerializable
 		// Eye input
 		if ( !IsProxy )
 		{
-			EyeAngles.pitch = MathX.Clamp( EyeAngles.pitch += Input.MouseDelta.y * 0.1f, -89.0f, 89.0f );
-			EyeAngles.yaw -= Input.MouseDelta.x * 0.1f;
+			_eyeAngles.pitch = MathX.Clamp( _eyeAngles.pitch += Input.MouseDelta.y * 0.1f, -89.0f, 89.0f );
+			_eyeAngles.yaw -= Input.MouseDelta.x * 0.1f;
 
 			var dot = Vector3.Dot( Controller.Velocity, Cam.GameObject.Transform.Rotation.Right ) * RollIntensity;
 			if ( float.IsNaN( dot ) || (int)dot == 0 )
 				dot = 0;
 
-			EyeAngles.roll = MathX.Lerp( EyeAngles.roll, dot, Time.Delta * RollLerpSpeed );
+			_eyeAngles.roll = MathX.Lerp( _eyeAngles.roll, dot, Time.Delta * RollLerpSpeed );
 
-			var lookDir = EyeAngles.ToRotation();
+			var lookDir = _eyeAngles.ToRotation();
 
 			Cam.Transform.Position = Eye.Transform.Position;
 			Cam.Transform.Rotation = lookDir;
@@ -95,7 +99,7 @@ public class PlayerController : Component, INetworkSerializable
 		// rotate body to look angles
 		if ( Body is not null )
 		{
-			var targetAngle = new Angles( 0, EyeAngles.yaw, 0 ).ToRotation();
+			var targetAngle = new Angles( 0, _eyeAngles.yaw, 0 ).ToRotation();
 
 			var v = Controller.Velocity.WithZ( 0 );
 
@@ -130,7 +134,7 @@ public class PlayerController : Component, INetworkSerializable
 		{
 			if ( TryGetSurfaceTrace( out var tr ) )
 			{
-				var snd = Sound.Play( Game.Random.Next( 0, 3 ) == 1 ? tr.Surface.Sounds.FootLeft : tr.Surface.Sounds.FootRight, Transform.Position );
+				var snd = Sound.Play( Sandbox.Game.Random.Next( 0, 3 ) == 1 ? tr.Surface.Sounds.FootLeft : tr.Surface.Sounds.FootRight, Transform.Position );
 				snd.Volume = _footstepVolume - 1;
 			}
 			_lastFootStep = 0;
@@ -204,7 +208,7 @@ public class PlayerController : Component, INetworkSerializable
 
 	private void BuildWishVelocity()
 	{
-		var rot = EyeAngles.ToRotation();
+		var rot = _eyeAngles.ToRotation();
 
 		WishVelocity = 0;
 
@@ -233,17 +237,7 @@ public class PlayerController : Component, INetworkSerializable
 	[Authority]
 	public void Respawn()
 	{
-		var pos = Random.Shared.FromList( _netMan.SpawnPositions );
-		GameObject.Transform.Position = pos;
-	}
-
-	public void Write( ref ByteStream net )
-	{
-		net.Write( EyeAngles );
-	}
-
-	public void Read( ByteStream net )
-	{
-		EyeAngles = net.Read<Angles>();
+		var sp = Random.Shared.FromList( GameNetwork.Instance.SpawnPoints );
+		GameObject.Transform.Position = sp.Transform.Position;
 	}
 }
