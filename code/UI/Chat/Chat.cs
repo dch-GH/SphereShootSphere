@@ -1,7 +1,11 @@
+using ATMP;
+
 namespace Sandbox;
 
 public partial class Chat
 {
+	private WorldChatter _worldChat;
+
 	[Broadcast]
 	public static void AddChatEntry( string name, string message, ulong steamId, bool isInfo = false )
 	{
@@ -14,8 +18,6 @@ public partial class Chat
 
 	public static void Say( string message )
 	{
-		// Clean it clientside.
-		message = message.RemoveBadCharacters();
 		var user = Connection.Local;
 		Log.Info( user.DisplayName + " " + message );
 		AddChatEntry( user.DisplayName, message, user.SteamId );

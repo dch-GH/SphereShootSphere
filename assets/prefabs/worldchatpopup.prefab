@@ -1,0 +1,31 @@
+{
+  "RootObject": {
+    "Id": "d6d05374-cee9-45ce-9a30-d3dab01420b5",
+    "Name": "WorldChat",
+    "Position": "0,0,73.79288",
+    "Rotation": "-0.00000005438367,0.00000000000000404445,-0.9124066,0.4092868",
+    "Scale": "0.9317537,1.256609,0.9317537",
+    "Enabled": true,
+    "Components": [
+      {
+        "__version": 0,
+        "__type": "WorldChatPopup",
+        "__enabled": true
+      },
+      {
+        "__version": 0,
+        "__type": "TextRenderer",
+        "__enabled": true,
+        "Color": "1,1,1,1",
+        "FontFamily": "Poppins",
+        "FontSize": 100,
+        "Scale": 0.1,
+        "Text": "you goofy! \uD83E\uDD13"
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": []
+}

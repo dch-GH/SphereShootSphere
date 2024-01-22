@@ -105,7 +105,7 @@
     {
       "Id": "5b7cfee2-cd31-40bd-bb73-742bcc8c96e7",
       "Name": "AISpawner",
-      "Position": "65.93849,744.8792,278.4091",
+      "Position": "-263.436,744.8792,273.8531",
       "Enabled": true,
       "Components": [
         {
@@ -113,7 +113,22 @@
           "__type": "AISpawner",
           "__enabled": true,
           "_enemyPrefab": "assets/prefabs/ai/aibot1.prefab",
-          "_spawnRate": 12
+          "_spawnRate": 24
+        }
+      ]
+    },
+    {
+      "Id": "54ba57d2-163c-492a-a691-4e82adf51b60",
+      "Name": "AISpawner (1)",
+      "Position": "1266.705,-151.5215,213.1477",
+      "Enabled": true,
+      "Components": [
+        {
+          "__version": 0,
+          "__type": "AISpawner",
+          "__enabled": true,
+          "_enemyPrefab": "assets/prefabs/ai/aibot1.prefab",
+          "_spawnRate": 24
         }
       ]
     },

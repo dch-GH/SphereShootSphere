@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "647df4db-618a-473a-952e-0ffc8f402440",
+    "Id": "526a844b-e82b-4fcf-aca5-a77f50055276",
     "Name": "player",
     "Enabled": true,
     "Components": [
@@ -19,11 +19,11 @@
         "__version": 0,
         "__type": "PlayerController",
         "__enabled": true,
-        "_hitbox": "4ac873c9-635d-4902-bdb4-db80a20463f3",
-        "_renderer": "4ac873c9-635d-4902-bdb4-db80a20463f3",
-        "Body": "4ac873c9-635d-4902-bdb4-db80a20463f3",
-        "Controller": "647df4db-618a-473a-952e-0ffc8f402440",
-        "Eye": "6deeae9b-0e9f-40d5-a4a3-1ae3dbaa976d",
+        "_hitbox": "10629847-527b-4362-9325-2f53ca653da0",
+        "_renderer": "10629847-527b-4362-9325-2f53ca653da0",
+        "Body": "10629847-527b-4362-9325-2f53ca653da0",
+        "Controller": "526a844b-e82b-4fcf-aca5-a77f50055276",
+        "Eye": "f3ded0e9-1746-4970-98bf-31442e88939b",
         "Gravity": "0,0,800",
         "MoveSpeed": 400,
         "PlayerMaterials": [
@@ -38,19 +38,25 @@
         "__version": 0,
         "__type": "Weapon",
         "__enabled": true,
-        "Beam": "647df4db-618a-473a-952e-0ffc8f402440",
-        "Splash": "00c181d3-df8f-4613-b8ee-99ae1ba42d2e"
+        "Beam": "526a844b-e82b-4fcf-aca5-a77f50055276",
+        "Splash": "88d22458-2097-473d-835b-c7cb73663820"
       },
       {
         "__version": 0,
         "__type": "SceneParticleManager",
         "__enabled": true,
         "Template": "assets/particles/beam.vpcf"
+      },
+      {
+        "__version": 0,
+        "__type": "WorldChatter",
+        "__enabled": true,
+        "_worldChatPrefab": "assets/prefabs/worldchatpopup.prefab"
       }
     ],
     "Children": [
       {
-        "Id": "4ac873c9-635d-4902-bdb4-db80a20463f3",
+        "Id": "10629847-527b-4362-9325-2f53ca653da0",
         "Name": "Body",
         "Position": "0,0,33.96304",
         "Scale": "0.5,0.5,0.5",
@@ -81,13 +87,13 @@
         ]
       },
       {
-        "Id": "6deeae9b-0e9f-40d5-a4a3-1ae3dbaa976d",
+        "Id": "f3ded0e9-1746-4970-98bf-31442e88939b",
         "Name": "Eyes",
         "Position": "0,0,59.39347",
         "Enabled": true
       },
       {
-        "Id": "00c181d3-df8f-4613-b8ee-99ae1ba42d2e",
+        "Id": "88d22458-2097-473d-835b-c7cb73663820",
         "Name": "BeamSplashes",
         "Position": "-97.91241,123.5333,-33.04216",
         "Enabled": true,
@@ -101,7 +107,7 @@
         ]
       },
       {
-        "Id": "2ab9edc4-cc16-430e-ab8c-acdf34e6a2e0",
+        "Id": "7926011d-f4b9-4808-bd1b-ed7b79f88e60",
         "Name": "Nametag",
         "Position": "0,0,66.03888",
         "Enabled": true,

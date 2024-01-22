@@ -191,8 +191,6 @@
 	protected override void OnAfterTreeRender(bool firstTime)
 	{
 		base.OnAfterTreeRender(firstTime);
-		if (firstTime)
-			Current?.AddEntry("Server", "Hi :)", 0, true);
 
 		Canvas.PreferScrollToBottom = true;
 		Input.AcceptsFocus = true;
@@ -233,7 +231,11 @@
 
 		if (string.IsNullOrWhiteSpace(msg)) return;
 
-		Say(msg);
+		// Clean it clientside.
+		var message = msg.RemoveBadCharacters();
+		_worldChat ??= Local.Pawn.Components.Get<ATMP.WorldChatter>();
+		_worldChat.WorldChatSend(message);
+		Say(message);
 	}
 
 	public void AddEntry(string name, string message, ulong playerId = 0, bool isInfo = false)

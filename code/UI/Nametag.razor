@@ -32,6 +32,6 @@
 
 	protected override int BuildHash()
 	{
-		return System.HashCode.Combine(IsProxy);
+		return System.HashCode.Combine(GameObject.Network.OwnerId);
 	}
 }
