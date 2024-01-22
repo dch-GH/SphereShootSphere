@@ -1,0 +1,38 @@
+$rounding: 4px;
+$blue: #3273eb;
+Scoreboard {
+    opacity: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 25%;
+    left: 25%;
+    right: 25%;
+    font-size: 32px;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to bottom, rgba(#080813, 0.9), rgba(#1c1c38, 0.55), rgba(#1c1c38, 0.1));
+    border-radius: $rounding $rounding 0 0;
+    color: white;
+    transition: all 250ms ease-in-out;
+    &.active {
+        opacity: 1;
+    }
+
+    .title {
+        padding-top: 6px;
+    }
+
+    .inner {
+        padding-top: 5px;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hr {
+        width: 95%;
+        height: 2px;
+        background-color: rgb(255, 255, 255, 0.5);
+    }
+}

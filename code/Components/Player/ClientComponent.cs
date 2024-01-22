@@ -8,12 +8,12 @@ public class ClientComponent : Component
 	[Property] public GameObject Pawn { get; set; }
 
 	public bool IsLocal => ConnectionId == Connection.Local.Id;
-	[Sync] public Guid ConnectionId { get; set; }
-	[Sync] public bool Host { get; set; }
-	[Sync] public string UserName { get; set; }
-	[Sync] public int Score { get; set; }
-	[Sync] public ulong SteamId { get; set; }
-	[Sync] public short Ping { get; set; }
+	[Sync] public Guid ConnectionId { get; private set; }
+	[Sync] public bool Host { get; private set; }
+	[Sync] public string UserName { get; private set; }
+	[Sync( Query = true )] public int Score { get; private set; }
+	[Sync] public ulong SteamId { get; private set; }
+	[Sync] public short Ping { get; private set; }
 
 	private RealTimeSince _lastPingUpdate;
 
@@ -50,6 +50,14 @@ public class ClientComponent : Component
 	public void OnDisconnectClient( Guid channelId, string userName, ulong steamId, bool isHost )
 	{
 		Chat.Current?.AddEntry( userName, $"has left the game.", steamId, true );
-		GameObject.Destroy();
+
+		if ( !IsProxy )
+			GameObject.Destroy();
+	}
+
+	// [ServerRPC, Broadcast]
+	public void AddScore( int amount )
+	{
+		Score += amount;
 	}
 }

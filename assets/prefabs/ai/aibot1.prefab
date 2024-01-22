@@ -1,0 +1,67 @@
+{
+  "RootObject": {
+    "Id": "d3c81f13-704e-4ad7-b116-f2a29b6a35fe",
+    "Name": "aibot1",
+    "Enabled": true,
+    "Components": [
+      {
+        "__version": 0,
+        "__type": "AIDummy",
+        "__enabled": true,
+        "_hitbox": "d3c81f13-704e-4ad7-b116-f2a29b6a35fe",
+        "_popSound": "assets/sounds/pop.sound",
+        "_speedRange": [
+          {
+            "x": 0.10119048,
+            "y": 0.39361703
+          },
+          {
+            "x": 0.8110119,
+            "y": 0.69148934
+          }
+        ],
+        "_zRange": {
+          "rangex": "0,0",
+          "rangey": "0,0"
+        }
+      },
+      {
+        "__version": 0,
+        "__type": "CharacterController",
+        "__enabled": true,
+        "Acceleration": 4.35,
+        "GroundAngle": 45,
+        "Height": 36.4,
+        "IgnoreLayers": "",
+        "Radius": 10.96,
+        "StepHeight": 18
+      },
+      {
+        "__version": 0,
+        "__type": "ModelRenderer",
+        "__enabled": true,
+        "BodyGroups": 18446744073709551615,
+        "MaterialGroup": null,
+        "MaterialOverride": null,
+        "Model": "models/citizen_props/balloonears01.vmdl",
+        "RenderType": "On",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__version": 0,
+        "__type": "ManualHitbox",
+        "__enabled": true,
+        "CenterA": "0,0,16.9",
+        "CenterB": "0,0,0",
+        "HitboxTags": null,
+        "Radius": 20.700006,
+        "Shape": "Sphere",
+        "Target": null
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": []
+}

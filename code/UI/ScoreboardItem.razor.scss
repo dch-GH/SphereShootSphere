@@ -1,0 +1,35 @@
+ScoreboardItem {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 3;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    width: 100%;
+
+    .splitter {
+        display: flex;
+        flex-grow: 4;
+    }
+
+    .player-info {
+        text-align: center;
+        align-items: center;
+
+        label {
+            padding-left: 8px;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .score {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        font-family: Courier New;
+        margin-right: 16px;
+        text-align: center;
+        align-items: center;
+    }
+}

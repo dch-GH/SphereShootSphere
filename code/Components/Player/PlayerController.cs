@@ -1,11 +1,11 @@
-﻿using Sandbox.Network;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace ATMP;
 
-public class PlayerController : Component
+public sealed class PlayerController : Component
 {
 	[Property] public CharacterController Controller { get; private set; }
+	[Property] ModelRenderer _renderer { get; set; }
 	[Property] ManualHitbox _hitbox { get; set; }
 	[Property] public Vector3 Gravity { get; set; } = new Vector3( 0, 0, 800 );
 	[Property] private float MoveSpeed { get; set; } = 400f;
@@ -18,6 +18,7 @@ public class PlayerController : Component
 	public CameraComponent Cam;
 	public Vector3 WishVelocity { get; private set; }
 	private Angles _eyeAngles;
+
 	[Sync( Query = true )]
 	public Angles EyeAngles
 	{
@@ -39,21 +40,22 @@ public class PlayerController : Component
 			return;
 		}
 
+		Local.OnSpawned?.Invoke( GameObject );
 		Sound.Play( "assets/sounds/join.sound", GameObject.Transform.Position );
-		OnSpawn();
+		SpawnRPC();
 
 		Tags.Add( GameTags.LocalPlayer );
-		var modelRenderer = Body.Components.Get<ModelRenderer>();
-		modelRenderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+
+		_renderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
 		Devcam.OnToggled += ( devcamOn ) =>
 		{
 			if ( devcamOn )
 			{
-				modelRenderer.RenderType = ModelRenderer.ShadowRenderType.On;
+				_renderer.RenderType = ModelRenderer.ShadowRenderType.On;
 			}
 			else
 			{
-				modelRenderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+				_renderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
 			}
 		};
 
@@ -68,7 +70,7 @@ public class PlayerController : Component
 	}
 
 	[Broadcast]
-	private void OnSpawn()
+	private void SpawnRPC()
 	{
 		if ( Rpc.Caller == Connection.Local )
 			return;
@@ -78,6 +80,7 @@ public class PlayerController : Component
 
 	protected override void OnUpdate()
 	{
+		Cam = Scene.GetAllComponents<CameraComponent>().First();
 		if ( Devcam.Toggled )
 			return;
 
@@ -210,10 +213,10 @@ public class PlayerController : Component
 
 	private void SetupProxy()
 	{
-		if ( Body.Components.TryGet<ModelRenderer>( out var modelRenderer ) )
+		_renderer ??= Body.Components.Get<ModelRenderer>();
 		{
-			modelRenderer.MaterialOverride = Random.Shared.FromList( PlayerMaterials );
-			modelRenderer.RenderType = ModelRenderer.ShadowRenderType.On;
+			_renderer.MaterialOverride = Random.Shared.FromList( PlayerMaterials );
+			_renderer.RenderType = ModelRenderer.ShadowRenderType.On;
 		}
 		Tags.Remove( GameTags.LocalPlayer );
 		Body.Tags.Remove( GameTags.LocalPlayer );

@@ -1,0 +1,50 @@
+$rounding: 4px;
+$blue: #3273eb;
+HowToPlay {
+    opacity: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    right: 3%;
+    bottom: 6%;
+    font-size: 32px;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter-blur: 20px;
+    background-image: linear-gradient(to left, rgba(#080813, 0.9), rgba(#1c1c38, 0.55), rgba(#1c1c38, 0.1));
+    border-radius: $rounding $rounding 0 0;
+    color: white;
+    transition: all 5s ease-in-out;
+    font-family: Roboto;
+    transform: skewY(3);
+
+    padding: 32px;
+
+    &.active {
+        opacity: 1;
+    }
+
+    .inner {
+        font-family: Poppins;
+        font-weight: 600;
+        padding-top: 5px;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .line {
+        display: flex;
+        gap: 12px;
+    }
+
+    .input-hint {
+        color: wheat;
+    }
+
+    .hr {
+        width: 100%;
+        height: 2px;
+        background-color: rgb(255, 255, 255, 0.5);
+    }
+}

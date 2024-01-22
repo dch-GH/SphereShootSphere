@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "f7ed9508-f0f3-42d3-9e94-62ae792c73fb",
+    "Id": "647df4db-618a-473a-952e-0ffc8f402440",
     "Name": "player",
     "Enabled": true,
     "Components": [
@@ -19,10 +19,11 @@
         "__version": 0,
         "__type": "PlayerController",
         "__enabled": true,
-        "_hitbox": "34e35b46-259b-417d-91c1-4d0c1614b9e7",
-        "Body": "34e35b46-259b-417d-91c1-4d0c1614b9e7",
-        "Controller": "f7ed9508-f0f3-42d3-9e94-62ae792c73fb",
-        "Eye": "a324a5f9-9a11-43d9-8125-01fadaa5f93e",
+        "_hitbox": "4ac873c9-635d-4902-bdb4-db80a20463f3",
+        "_renderer": "4ac873c9-635d-4902-bdb4-db80a20463f3",
+        "Body": "4ac873c9-635d-4902-bdb4-db80a20463f3",
+        "Controller": "647df4db-618a-473a-952e-0ffc8f402440",
+        "Eye": "6deeae9b-0e9f-40d5-a4a3-1ae3dbaa976d",
         "Gravity": "0,0,800",
         "MoveSpeed": 400,
         "PlayerMaterials": [
@@ -37,8 +38,8 @@
         "__version": 0,
         "__type": "Weapon",
         "__enabled": true,
-        "Beam": "f7ed9508-f0f3-42d3-9e94-62ae792c73fb",
-        "Splash": "11f147b1-3013-4cad-8bb4-a62678c85f1f"
+        "Beam": "647df4db-618a-473a-952e-0ffc8f402440",
+        "Splash": "00c181d3-df8f-4613-b8ee-99ae1ba42d2e"
       },
       {
         "__version": 0,
@@ -49,7 +50,7 @@
     ],
     "Children": [
       {
-        "Id": "34e35b46-259b-417d-91c1-4d0c1614b9e7",
+        "Id": "4ac873c9-635d-4902-bdb4-db80a20463f3",
         "Name": "Body",
         "Position": "0,0,33.96304",
         "Scale": "0.5,0.5,0.5",
@@ -80,13 +81,13 @@
         ]
       },
       {
-        "Id": "a324a5f9-9a11-43d9-8125-01fadaa5f93e",
+        "Id": "6deeae9b-0e9f-40d5-a4a3-1ae3dbaa976d",
         "Name": "Eyes",
         "Position": "0,0,59.39347",
         "Enabled": true
       },
       {
-        "Id": "11f147b1-3013-4cad-8bb4-a62678c85f1f",
+        "Id": "00c181d3-df8f-4613-b8ee-99ae1ba42d2e",
         "Name": "BeamSplashes",
         "Position": "-97.91241,123.5333,-33.04216",
         "Enabled": true,
@@ -100,7 +101,7 @@
         ]
       },
       {
-        "Id": "bbd0fcaa-d08b-46e5-b8a9-fde864cdb6ba",
+        "Id": "2ab9edc4-cc16-430e-ab8c-acdf34e6a2e0",
         "Name": "Nametag",
         "Position": "0,0,66.03888",
         "Enabled": true,

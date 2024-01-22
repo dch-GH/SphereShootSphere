@@ -47,38 +47,6 @@
       ]
     },
     {
-      "Id": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
-      "Name": "Camera",
-      "Position": "1445.57,-244.2779,699.0608",
-      "Rotation": "0.3106923,-0.0251549,-0.9470786,-0.07667938",
-      "Enabled": true,
-      "Components": [
-        {
-          "__version": 0,
-          "__type": "CameraComponent",
-          "__enabled": true,
-          "BackgroundColor": "0.33333,0.46275,0.52157,1",
-          "ClearFlags": "All",
-          "FieldOfView": 90,
-          "IsMainCamera": true,
-          "Orthographic": false,
-          "OrthographicHeight": 1204,
-          "Priority": 1,
-          "RenderExcludeTags": "",
-          "RenderTags": "",
-          "TargetEye": "None",
-          "Viewport": "0,0,1,1",
-          "ZFar": 10000,
-          "ZNear": 10
-        },
-        {
-          "__version": 0,
-          "__type": "Devcam",
-          "__enabled": true
-        }
-      ]
-    },
-    {
       "Id": "571b240c-f6ee-4a81-af44-72afcb807186",
       "Name": "Map",
       "Position": "258.808,26.26291,158.8789",
@@ -127,11 +95,114 @@
           "__version": 0,
           "__type": "GameNetwork",
           "__enabled": true,
+          "CameraStart": "338bd38c-ec45-4d8b-93a3-6eeb2645bab8",
           "PlayerPrefab": "assets/prefabs/player.prefab",
           "SpawnPoints": [],
           "StartServer": true
         }
       ]
+    },
+    {
+      "Id": "5b7cfee2-cd31-40bd-bb73-742bcc8c96e7",
+      "Name": "AISpawner",
+      "Position": "65.93849,744.8792,278.4091",
+      "Enabled": true,
+      "Components": [
+        {
+          "__version": 0,
+          "__type": "AISpawner",
+          "__enabled": true,
+          "_enemyPrefab": "assets/prefabs/ai/aibot1.prefab",
+          "_spawnRate": 12
+        }
+      ]
+    },
+    {
+      "Id": "3ee1c9f4-07be-4e0b-8b23-67bee2d8ec8a",
+      "Name": "Camera",
+      "Position": "1887.096,-1935.162,817.5214",
+      "Rotation": "0.1209526,-0.05356938,-0.906301,-0.4013969",
+      "Enabled": true,
+      "Components": [
+        {
+          "__version": 0,
+          "__type": "CameraComponent",
+          "__enabled": true,
+          "BackgroundColor": "0.33333,0.46275,0.52157,1",
+          "ClearFlags": "All",
+          "FieldOfView": 90,
+          "IsMainCamera": true,
+          "Orthographic": false,
+          "OrthographicHeight": 1204,
+          "Priority": 1,
+          "RenderExcludeTags": "",
+          "RenderTags": "",
+          "TargetEye": "None",
+          "Viewport": "0,0,1,1",
+          "ZFar": 10000,
+          "ZNear": 10
+        },
+        {
+          "__version": 0,
+          "__type": "Tonemapping",
+          "__enabled": true,
+          "ExposureCompensation": 0.27,
+          "MaximumExposure": 1.01,
+          "MinimumExposure": 0.88,
+          "Rate": 1.29
+        },
+        {
+          "__version": 0,
+          "__type": "DepthOfField",
+          "__enabled": true,
+          "BackBlur": true,
+          "BlurSize": 72.59,
+          "FocalDistance": 37.28,
+          "FrontBlur": true
+        },
+        {
+          "__version": 0,
+          "__type": "Bloom",
+          "__enabled": true,
+          "BloomColor": {
+            "color": [
+              {
+                "c": "1,1,1,1"
+              },
+              {
+                "t": 1,
+                "c": "1,1,1,1"
+              }
+            ],
+            "alpha": []
+          },
+          "BloomCurve": [
+            {
+              "y": 0.43085107
+            },
+            {
+              "x": 1,
+              "y": 0.80851066
+            }
+          ],
+          "Mode": "Additive",
+          "Strength": 0.42,
+          "Threshold": 1.07,
+          "ThresholdWidth": 1.02
+        },
+        {
+          "__version": 0,
+          "__type": "Devcam",
+          "__enabled": true
+        }
+      ]
+    },
+    {
+      "Id": "338bd38c-ec45-4d8b-93a3-6eeb2645bab8",
+      "Name": "CameraStart",
+      "Position": "1878.328,-1936.677,816.8301",
+      "Rotation": "0.1209526,-0.05356938,-0.906301,-0.4013969",
+      "Enabled": true
     }
   ],
   "SceneProperties": {

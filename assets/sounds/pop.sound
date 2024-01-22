@@ -1,0 +1,13 @@
+{
+  "UI": false,
+  "Volume": "0.49,0.49,0",
+  "Pitch": "1.00,1.00,0",
+  "Decibels": 70,
+  "SelectionMode": "Random",
+  "Sounds": [
+    "sounds/physics/breaking/break_glass_bottle_large_01.vsnd",
+    "sounds/physics/breaking/break_glass_bottle_large_02.vsnd",
+    "sounds/physics/breaking/break_glass_bottle_large_03.vsnd"
+  ],
+  "__references": []
+}

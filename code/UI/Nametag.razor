@@ -25,13 +25,13 @@
 	{
 		if (IsProxy)
 		{
-			_client ??= GameObject.Components.GetInParent<ClientComponent>();
+			_client ??= Scene.FindClient(GameObject);
 			GameObject.Enabled = IsProxy;
 		}
 	}
 
 	protected override int BuildHash()
 	{
-		return System.HashCode.Combine(Time.Now);
+		return System.HashCode.Combine(IsProxy);
 	}
 }

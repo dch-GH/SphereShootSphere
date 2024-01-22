@@ -20,6 +20,7 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 	/// The prefab to spawn for the player to control.
 	/// </summary>
 	[Property] public GameObject PlayerPrefab { get; set; }
+	[Property] public GameObject CameraStart { get; set; }
 
 	/// <summary>
 	/// A list of points to choose from randomly to spawn the player in. If not set, we'll spawn at the
@@ -29,8 +30,31 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 
 	public Dictionary<Connection, ClientComponent> Clients { get; private set; }
 
+	[Sync] public List<Guid> ClientGuids { get; set; }
+
 	protected override void OnAwake()
 	{
+		var cam = Scene.GetAllComponents<CameraComponent>().First();
+		if ( cam is not null )
+		{
+			cam.Transform.Position = CameraStart.Transform.Position;
+			cam.Transform.Rotation = CameraStart.Transform.Rotation;
+
+			var dof = cam.Components.Get<DepthOfField>( includeDisabled: true );
+			// ISSUE: dof.Enabled doesnt work lol
+			dof.FrontBlur = true;
+			dof.BackBlur = true;
+		}
+
+		Local.OnSpawned += ( playerGameObject ) =>
+		{
+			if ( cam.Components.TryGet<DepthOfField>( out var dof ) )
+			{
+				dof.FrontBlur = false;
+				dof.BackBlur = false;
+			}
+		};
+
 		// Find all the legacy hammer spawns and populate the list
 		SpawnPoints ??= new();
 		if ( SpawnPoints.Count <= 0 )
@@ -52,6 +76,7 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 
 	protected override void OnDestroy()
 	{
+		Local.OnSpawned = null;
 		Instance = null;
 		Chat.Current = null;
 	}
@@ -79,6 +104,7 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 
 		if ( PlayerPrefab is null )
 			return;
+
 		// Create a client independently of the gameobject they will control.
 		// The client' connection owns this as well as their actual player GameObject.
 		var clientGameObject = Scene.CreateObject();
@@ -91,32 +117,27 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 
 		// Everything we just set on the client component in client.Connect
 		// won't be synced unless we Network.Spawn AFTER we set all that stuff.
+		PreSpawnClient( channel.Id );
 		var startLocation = Random.Shared.FromList( SpawnPoints, default ).Transform.Position;
 		SpawnPlayerAsync( channel, client, startLocation );
 	}
 
+	// Host only
 	private async void SpawnPlayerAsync( Connection channel, ClientComponent client, Vector3 position )
 	{
-		PreSpawnClient( channel.Id );
 		await GameTask.DelayRealtimeSeconds( 1.5f );
 
 		// Spawn this object and make the client the owner
 		var player = PlayerPrefab.Clone( position );
 		player.BreakFromPrefab();
 		player.Name = $"Player - {channel.DisplayName}";
-		player.NetworkSpawn( channel );
 		client.Pawn = player;
+		player.NetworkSpawn( channel );
 	}
 
-	[TargetedRPC, ClientRPC, Broadcast]
+	[Broadcast]
 	private void PreSpawnClient( Guid channelId )
 	{
-		var cam = Scene.GetAllComponents<CameraComponent>().First();
-		if ( cam is not null )
-		{
-			cam.Transform.Position = new Vector3( 1445.57f, -244.278f, 699.061f );
-			cam.Transform.Rotation = Rotation.From( new Angles( 36.325f, 170.742f, 0f ) );
-		}
 	}
 
 	public void OnDisconnected( Connection conn )
