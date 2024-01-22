@@ -1,6 +1,6 @@
 {
   "RootObject": {
-    "Id": "d3c81f13-704e-4ad7-b116-f2a29b6a35fe",
+    "Id": "b3189de1-4080-47ce-8728-59d8385c9594",
     "Name": "aibot1",
     "Enabled": true,
     "Components": [
@@ -8,7 +8,10 @@
         "__version": 0,
         "__type": "AIDummy",
         "__enabled": true,
-        "_hitbox": "d3c81f13-704e-4ad7-b116-f2a29b6a35fe",
+        "_abilityDrops": [
+          "assets/prefabs/abilities/zoom_pickup.prefab"
+        ],
+        "_hitbox": "b3189de1-4080-47ce-8728-59d8385c9594",
         "_popSound": "assets/sounds/pop.sound",
         "_speedRange": [
           {
@@ -20,10 +23,12 @@
             "y": 0.69148934
           }
         ],
-        "_zRange": {
-          "rangex": "0,0",
-          "rangey": "0,0"
-        }
+        "_zRange": [
+          {
+            "x": 0.5,
+            "y": 0.5
+          }
+        ]
       },
       {
         "__version": 0,

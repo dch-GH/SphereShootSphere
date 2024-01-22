@@ -1,0 +1,66 @@
+{
+  "RootObject": {
+    "Id": "08770891-bec8-4a66-8c47-fd64c96a2fe2",
+    "Name": "ZoomPickup",
+    "Enabled": true,
+    "Components": [
+      {
+        "__version": 0,
+        "__type": "AbilityPickup",
+        "__enabled": true,
+        "Ability": "Zoom"
+      },
+      {
+        "__version": 0,
+        "__type": "SpriteRenderer",
+        "__enabled": true,
+        "Additive": false,
+        "CastShadows": true,
+        "Color": "1,1,1,1",
+        "DepthFeather": 0,
+        "FogStrength": 1,
+        "Opaque": false,
+        "Size": "32,32",
+        "Texture": "assets/materials/zoom.vtex"
+      },
+      {
+        "__version": 0,
+        "__type": "Rigidbody",
+        "__enabled": true,
+        "AngularDamping": 0,
+        "Gravity": true,
+        "LinearDamping": 0,
+        "Locking": {
+          "Pitch": true,
+          "Roll": true
+        },
+        "RigidbodyFlags": 0,
+        "StartAsleep": false
+      },
+      {
+        "__version": 0,
+        "__type": "SphereCollider",
+        "__enabled": true,
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Radius": 10,
+        "Static": false,
+        "Surface": null
+      },
+      {
+        "__version": 0,
+        "__type": "BoxCollider",
+        "__enabled": true,
+        "Center": "0,0,0",
+        "IsTrigger": true,
+        "Scale": "50,50,50",
+        "Static": false,
+        "Surface": null
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": []
+}

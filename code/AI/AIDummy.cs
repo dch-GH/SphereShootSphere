@@ -11,6 +11,7 @@ public sealed class AIDummy : Component, Component.IDamageable
 	[Property] private Curve _speedRange { get; set; }
 	[Property] private Curve _zRange { get; set; }
 	[Property] private SoundEvent _popSound { get; set; }
+	[Property] private List<GameObject> _abilityDrops { get; set; }
 	private RealTimeSince _lifetime;
 
 	protected override void OnStart()
@@ -60,6 +61,10 @@ public sealed class AIDummy : Component, Component.IDamageable
 	private void Die()
 	{
 		Sound.Play( "assets/sounds/pop.sound", Transform.Position );
+
+		if ( Random.Shared.Next( 0, 3 ) == 1 )
+			Random.Shared.FromList( _abilityDrops ).Clone( Transform.Position );
+
 		GameObject.Destroy();
 	}
 }

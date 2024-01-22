@@ -2,8 +2,9 @@
 
 namespace ATMP;
 
-public sealed class PlayerController : Component
+public sealed partial class PlayerController : Component
 {
+
 	[Property] public CharacterController Controller { get; private set; }
 	[Property] ModelRenderer _renderer { get; set; }
 	[Property] ManualHitbox _hitbox { get; set; }
@@ -15,9 +16,8 @@ public sealed class PlayerController : Component
 	[Property] private float RollLerpSpeed { get; set; } = 1;
 	[Property] public List<Material> PlayerMaterials { get; set; }
 
-	public CameraComponent Cam;
 	public Vector3 WishVelocity { get; private set; }
-	private Angles _eyeAngles;
+
 
 	[Sync( Query = true )]
 	public Angles EyeAngles
@@ -26,9 +26,17 @@ public sealed class PlayerController : Component
 		set { _eyeAngles = value; }
 	}
 
+	private Angles _eyeAngles;
+	public CameraComponent Cam; // TODO: Aimray
+
 	TimeSince _lastFootStep;
 	bool _wasGrounded;
 	float _footstepVolume = 4;
+
+	const float _defaultFov = 90;
+	float _fovTarget = _defaultFov;
+	private float _aimSpeedModifier = 1;
+	private float _moveSpeed;
 
 	protected override void OnStart()
 	{
@@ -80,15 +88,18 @@ public sealed class PlayerController : Component
 
 	protected override void OnUpdate()
 	{
-		Cam = Scene.GetAllComponents<CameraComponent>().First();
+		Cam ??= Scene.GetAllComponents<CameraComponent>().First();
+
+		UpdateAbilities();
+
 		if ( Devcam.Toggled )
 			return;
 
 		// Eye input
 		if ( !IsProxy )
 		{
-			_eyeAngles.pitch = MathX.Clamp( _eyeAngles.pitch += Input.MouseDelta.y * 0.1f, -89.0f, 89.0f );
-			_eyeAngles.yaw -= Input.MouseDelta.x * 0.1f;
+			_eyeAngles.pitch = MathX.Clamp( _eyeAngles.pitch += Input.MouseDelta.y * 0.1f * _aimSpeedModifier, -89.0f, 89.0f );
+			_eyeAngles.yaw -= Input.MouseDelta.x * 0.1f * _aimSpeedModifier;
 
 			var dot = Vector3.Dot( Controller.Velocity, Cam.GameObject.Transform.Rotation.Right ) * RollIntensity;
 			if ( float.IsNaN( dot ) || (int)dot == 0 )
@@ -99,11 +110,14 @@ public sealed class PlayerController : Component
 			var lookDir = _eyeAngles.ToRotation();
 			Cam.Transform.Position = Eye.Transform.Position;
 			Cam.Transform.Rotation = lookDir;
+
+			Cam.FieldOfView = _fovTarget;
 		}
 
 		if ( Controller is null )
 			return;
 
+		_moveSpeed = Controller.Velocity.Length;
 		float rotateDifference = 0;
 
 		// rotate body to look angles
