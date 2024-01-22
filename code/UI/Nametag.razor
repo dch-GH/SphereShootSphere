@@ -4,72 +4,34 @@
 @inherits PanelComponent
 
 @namespace ATMP.UI
+@attribute [StyleSheet]
 
 <root>
-    @{
-        if (_client is null)
-            return;
-    }   
+	@{
+		if (_client is null)
+			return;
+	}
 
-    <div class="card">
-        <label class="name">@_client.UserName</label>
-    </div>
+	<div class="card">
+		<label class="name">@_client.UserName</label>
+	</div>
 </root>
-
-<style>
-    Nametag {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        white-space: nowrap;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        div
-
-    {
-        font-family: Arial, Helvetica, sans-serif;
-        color: white;
-    }
-
-    .card {
-        flex-direction: column;
-        background-color: #0008;
-        border-radius: 5px;
-        overflow: hidden;
-        padding: 10px 20px;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        .name
-
-    {
-        font-size: 25px;
-        font-family: Poppins;
-        color: #fff;
-    }
-
-    }
-    }
-</style>
 
 @code
 {
-    private ClientComponent _client;
+	private ClientComponent _client;
 
-    protected override void OnStart()
-    {
-        if(IsProxy)
-        {
-            _client ??= GameObject.Components.GetInParent<ClientComponent>();
-            GameObject.Enabled = IsProxy;
-        }
-    }
+	protected override void OnStart()
+	{
+		if (IsProxy)
+		{
+			_client ??= GameObject.Components.GetInParent<ClientComponent>();
+			GameObject.Enabled = IsProxy;
+		}
+	}
 
-    protected override int BuildHash()
-    {
-        return System.HashCode.Combine(Time.Now);
-    }
+	protected override int BuildHash()
+	{
+		return System.HashCode.Combine(Time.Now);
+	}
 }

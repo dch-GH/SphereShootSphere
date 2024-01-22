@@ -16,8 +16,8 @@ public partial class Chat
 	{
 		// Clean it clientside.
 		message = message.RemoveBadCharacters();
-
 		var user = Connection.Local;
+		Log.Info( user.DisplayName + " " + message );
 		AddChatEntry( user.DisplayName, message, user.SteamId );
 	}
 }

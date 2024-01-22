@@ -50,6 +50,12 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 		Instance = this;
 	}
 
+	protected override void OnDestroy()
+	{
+		Instance = null;
+		Chat.Current = null;
+	}
+
 	protected override async Task OnLoad()
 	{
 		if ( Scene.IsEditor )
@@ -73,31 +79,33 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 
 		if ( PlayerPrefab is null )
 			return;
+		// Create a client independently of the gameobject they will control.
+		// The client' connection owns this as well as their actual player GameObject.
+		var clientGameObject = Scene.CreateObject();
+		clientGameObject.Name = $"Client - {channel.DisplayName}";
 
-		//Log.Info( $"Joiner: {channel.Id}, {channel.DisplayName}, {channel.Name}, {channel.Address}" );
-		var startLocation = Random.Shared.FromList( SpawnPoints, default ).Transform.Position;
-		SpawnPlayerAsync( channel, startLocation );
-	}
-
-	private async void SpawnPlayerAsync( Connection channel, Vector3 startLocation )
-	{
-		PreSpawnClient( channel.Id );
-
-		await GameTask.DelayRealtimeSeconds( 1.5f );
-
-		// Spawn this object and make the client the owner
-		var player = PlayerPrefab.Clone( startLocation );
-		player.Name = $"Player - {channel.DisplayName}";
-		player.BreakFromPrefab();
-
-		var client = player.Components.GetOrCreate<ClientComponent>();
-		client.Pawn = player;
+		var client = clientGameObject.Components.Create<ClientComponent>();
 		client.Connect( channel );
+		clientGameObject.NetworkSpawn( channel );
 		Clients.Add( channel, client );
 
 		// Everything we just set on the client component in client.Connect
 		// won't be synced unless we Network.Spawn AFTER we set all that stuff.
-		player.Network.Spawn( channel );
+		var startLocation = Random.Shared.FromList( SpawnPoints, default ).Transform.Position;
+		SpawnPlayerAsync( channel, client, startLocation );
+	}
+
+	private async void SpawnPlayerAsync( Connection channel, ClientComponent client, Vector3 position )
+	{
+		PreSpawnClient( channel.Id );
+		await GameTask.DelayRealtimeSeconds( 1.5f );
+
+		// Spawn this object and make the client the owner
+		var player = PlayerPrefab.Clone( position );
+		player.BreakFromPrefab();
+		player.Name = $"Player - {channel.DisplayName}";
+		player.NetworkSpawn( channel );
+		client.Pawn = player;
 	}
 
 	[TargetedRPC, ClientRPC, Broadcast]

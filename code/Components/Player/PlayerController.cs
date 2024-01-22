@@ -31,23 +31,33 @@ public class PlayerController : Component
 
 	protected override void OnStart()
 	{
-		//Log.Info( $"OnStart --- IsProxy={IsProxy}, OwnerId={Network.OwnerId}, IsOwner={Network.IsOwner}" );
 		_hitbox.Target = GameObject;
 
 		if ( IsProxy )
 		{
-			// NOTE: The host has to call this in OnStart because IsProxy isn't valid (for the host) for proxxies.
 			SetupProxy();
 			return;
 		}
-		else
-		{
-			Tags.Add( GameTags.LocalPlayer );
 
-			var modelRenderer = Body.Components.Get<ModelRenderer>();
-			modelRenderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
-			LocalPlayer.Pawn = GameObject;
-		}
+		Sound.Play( "assets/sounds/join.sound", GameObject.Transform.Position );
+		OnSpawn();
+
+		Tags.Add( GameTags.LocalPlayer );
+		var modelRenderer = Body.Components.Get<ModelRenderer>();
+		modelRenderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+		Devcam.OnToggled += ( devcamOn ) =>
+		{
+			if ( devcamOn )
+			{
+				modelRenderer.RenderType = ModelRenderer.ShadowRenderType.On;
+			}
+			else
+			{
+				modelRenderer.RenderType = ModelRenderer.ShadowRenderType.ShadowsOnly;
+			}
+		};
+
+		Local.Pawn = GameObject;
 
 		Cam = Scene.GetAllComponents<CameraComponent>().First();
 		if ( Cam is not null )
@@ -57,22 +67,20 @@ public class PlayerController : Component
 		}
 	}
 
-	protected override void OnAwake()
+	[Broadcast]
+	private void OnSpawn()
 	{
-		//Log.Info( $"OnAwake --- IsHost={GameNetworkSystem.IsHost} IsProxy={IsProxy}, OwnerId={Network.OwnerId}, IsOwner={Network.IsOwner}" );
+		if ( Rpc.Caller == Connection.Local )
+			return;
+
 		Sound.Play( "assets/sounds/join.sound", GameObject.Transform.Position );
-		if ( IsProxy )
-		{
-			SetupProxy();
-		}
-		else
-		{
-			LocalPlayer.Pawn = GameObject;
-		}
 	}
 
 	protected override void OnUpdate()
 	{
+		if ( Devcam.Toggled )
+			return;
+
 		// Eye input
 		if ( !IsProxy )
 		{
@@ -86,7 +94,6 @@ public class PlayerController : Component
 			_eyeAngles.roll = MathX.Lerp( _eyeAngles.roll, dot, Time.Delta * RollLerpSpeed );
 
 			var lookDir = _eyeAngles.ToRotation();
-
 			Cam.Transform.Position = Eye.Transform.Position;
 			Cam.Transform.Rotation = lookDir;
 		}
@@ -195,6 +202,12 @@ public class PlayerController : Component
 		}
 	}
 
+	protected override void OnDestroy()
+	{
+		Local.Pawn = null;
+		Local.Client = null;
+	}
+
 	private void SetupProxy()
 	{
 		if ( Body.Components.TryGet<ModelRenderer>( out var modelRenderer ) )
@@ -208,6 +221,9 @@ public class PlayerController : Component
 
 	private void BuildWishVelocity()
 	{
+		if ( Devcam.Toggled )
+			return;
+
 		var rot = _eyeAngles.ToRotation();
 
 		WishVelocity = 0;

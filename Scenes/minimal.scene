@@ -11,6 +11,8 @@
           "__version": 0,
           "__type": "DirectionalLight",
           "__enabled": true,
+          "FogMode": "Enabled",
+          "FogStrength": 1,
           "LightColor": "0.91373,0.98039,1,1",
           "Shadows": true,
           "SkyColor": "0.05882,0.07451,0.08235,1"
@@ -68,6 +70,11 @@
           "Viewport": "0,0,1,1",
           "ZFar": 10000,
           "ZNear": 10
+        },
+        {
+          "__version": 0,
+          "__type": "Devcam",
+          "__enabled": true
         }
       ]
     },

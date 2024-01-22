@@ -1,10 +1,11 @@
 {
   "RootObject": {
-    "Id": "de8171cd-ba57-4fce-bc91-f9d2f55862e4",
+    "Id": "f7ed9508-f0f3-42d3-9e94-62ae792c73fb",
     "Name": "player",
     "Enabled": true,
     "Components": [
       {
+        "__version": 0,
         "__type": "CharacterController",
         "__enabled": true,
         "Acceleration": 10,
@@ -15,12 +16,13 @@
         "StepHeight": 18
       },
       {
+        "__version": 0,
         "__type": "PlayerController",
         "__enabled": true,
-        "_hitbox": "7937b4e9-9311-4ee5-a4d6-c49af14bc8de",
-        "Body": "7937b4e9-9311-4ee5-a4d6-c49af14bc8de",
-        "Controller": "de8171cd-ba57-4fce-bc91-f9d2f55862e4",
-        "Eye": "e8f2f47d-04e5-4598-811d-c0ae346d91b2",
+        "_hitbox": "34e35b46-259b-417d-91c1-4d0c1614b9e7",
+        "Body": "34e35b46-259b-417d-91c1-4d0c1614b9e7",
+        "Controller": "f7ed9508-f0f3-42d3-9e94-62ae792c73fb",
+        "Eye": "a324a5f9-9a11-43d9-8125-01fadaa5f93e",
         "Gravity": "0,0,800",
         "MoveSpeed": 400,
         "PlayerMaterials": [
@@ -32,32 +34,29 @@
         "RollLerpSpeed": 7
       },
       {
+        "__version": 0,
         "__type": "Weapon",
         "__enabled": true,
-        "Beam": "de8171cd-ba57-4fce-bc91-f9d2f55862e4",
-        "Splash": "1a727c3b-8bc2-407d-b3ae-5252461f6bcc"
+        "Beam": "f7ed9508-f0f3-42d3-9e94-62ae792c73fb",
+        "Splash": "11f147b1-3013-4cad-8bb4-a62678c85f1f"
       },
       {
+        "__version": 0,
         "__type": "SceneParticleManager",
         "__enabled": true,
         "Template": "assets/particles/beam.vpcf"
-      },
-      {
-        "__type": "ClientComponent",
-        "__enabled": true,
-        "Connection": null,
-        "Pawn": null
       }
     ],
     "Children": [
       {
-        "Id": "7937b4e9-9311-4ee5-a4d6-c49af14bc8de",
+        "Id": "34e35b46-259b-417d-91c1-4d0c1614b9e7",
         "Name": "Body",
         "Position": "0,0,33.96304",
         "Scale": "0.5,0.5,0.5",
         "Enabled": true,
         "Components": [
           {
+            "__version": 0,
             "__type": "ModelRenderer",
             "__enabled": true,
             "BodyGroups": 18446744073709551615,
@@ -68,6 +67,7 @@
             "Tint": "1,1,1,1"
           },
           {
+            "__version": 0,
             "__type": "ManualHitbox",
             "__enabled": true,
             "CenterA": "0,0,0",
@@ -80,18 +80,19 @@
         ]
       },
       {
-        "Id": "e8f2f47d-04e5-4598-811d-c0ae346d91b2",
+        "Id": "a324a5f9-9a11-43d9-8125-01fadaa5f93e",
         "Name": "Eyes",
         "Position": "0,0,59.39347",
         "Enabled": true
       },
       {
-        "Id": "1a727c3b-8bc2-407d-b3ae-5252461f6bcc",
+        "Id": "11f147b1-3013-4cad-8bb4-a62678c85f1f",
         "Name": "BeamSplashes",
         "Position": "-97.91241,123.5333,-33.04216",
         "Enabled": true,
         "Components": [
           {
+            "__version": 0,
             "__type": "SceneParticleManager",
             "__enabled": true,
             "Template": "assets/particles/beam_hit.vpcf"
@@ -99,12 +100,13 @@
         ]
       },
       {
-        "Id": "b5dd53fc-1725-48e6-abc0-9d6684b084bd",
+        "Id": "bbd0fcaa-d08b-46e5-b8a9-fde864cdb6ba",
         "Name": "Nametag",
         "Position": "0,0,66.03888",
         "Enabled": true,
         "Components": [
           {
+            "__version": 0,
             "__type": "WorldPanel",
             "__enabled": true,
             "HorizontalAlign": "Center",
@@ -114,6 +116,7 @@
             "VerticalAlign": "Center"
           },
           {
+            "__version": 0,
             "__type": "Nametag",
             "__enabled": true
           }

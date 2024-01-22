@@ -26,6 +26,14 @@ public class ClientComponent : Component
 		SteamId = channel.SteamId;
 	}
 
+	protected override void OnStart()
+	{
+		if ( IsProxy )
+			return;
+
+		Local.Client = this;
+	}
+
 	protected override void OnFixedUpdate()
 	{
 		if ( !GameNetworkSystem.IsHost )
@@ -42,5 +50,6 @@ public class ClientComponent : Component
 	public void OnDisconnectClient( Guid channelId, string userName, ulong steamId, bool isHost )
 	{
 		Chat.Current?.AddEntry( userName, $"has left the game.", steamId, true );
+		GameObject.Destroy();
 	}
 }

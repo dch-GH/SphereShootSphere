@@ -3,31 +3,15 @@
 
 @namespace ATMP.UI
 @inherits Panel
-
-@code
-{
-}
+@attribute [StyleSheet]
 
 <root>
 </root>
 
-<style>
-    crosshair {
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        left: 50%;
-        top: 50%;
-        margin-top: -4px;
-        margin-left: -4px;
-        border-width: 1px;
-        border-color: white;
-        border-radius: 2px;
-        backdrop-filter: invert(100%);
-        opacity: 1;
-
-        &.active {
-            opacity: 1;
-        }
-    }
-</style>
+@code
+{
+	public override void Tick()
+	{
+		SetClass("active", Local.Pawn != null);
+	}
+}
