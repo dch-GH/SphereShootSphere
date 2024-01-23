@@ -8,9 +8,7 @@
       "Enabled": true,
       "Components": [
         {
-          "__version": 0,
           "__type": "DirectionalLight",
-          "__enabled": true,
           "FogMode": "Enabled",
           "FogStrength": 1,
           "LightColor": "0.91373,0.98039,1,1",
@@ -25,16 +23,12 @@
       "Enabled": true,
       "Components": [
         {
-          "__version": 0,
           "__type": "SkyBox2D",
-          "__enabled": true,
           "SkyMaterial": "materials/skybox/light_test_sky_sunny02.vmat",
           "Tint": "1,1,1,1"
         },
         {
-          "__version": 0,
           "__type": "EnvmapProbe",
-          "__enabled": true,
           "Bounds": {
             "Mins": "-512,-512,-512",
             "Maxs": "512,512,512"
@@ -53,13 +47,74 @@
       "Enabled": true,
       "Components": [
         {
-          "__version": 0,
           "__type": "MapInstance",
-          "__enabled": true,
           "MapName": "monkestudio.ttt_crossroads",
-          "OnMapLoaded": null,
+          "OnMapLoaded": {
+            "Kind": "Action",
+            "Version": 3,
+            "Variables": [
+              {
+                "Name": "_this",
+                "Type": "Sandbox.Game/Sandbox.Component",
+                "Default": {
+                  "_type": "component",
+                  "go": "571b240c-f6ee-4a81-af44-72afcb807186",
+                  "component_type": "MapInstance"
+                }
+              }
+            ],
+            "Nodes": [
+              {
+                "Id": 0,
+                "Type": "input"
+              },
+              {
+                "Id": 1,
+                "Type": "scene.get",
+                "Properties": {
+                  "T": "package.null.woop/ATMP.MapPhysics"
+                },
+                "UserData": {
+                  "Position": "16,-112"
+                }
+              },
+              {
+                "Id": 2,
+                "Type": "call",
+                "Properties": {
+                  "_isStatic": false,
+                  "_name": "OnMapLoaded",
+                  "_type": "package.null.woop/ATMP.MapPhysics"
+                },
+                "UserData": {
+                  "Position": "272,-0"
+                }
+              }
+            ],
+            "Links": [
+              {
+                "SrcId": 0,
+                "SrcName": "_signal",
+                "DstId": 2,
+                "DstName": "_signal"
+              },
+              {
+                "SrcId": 1,
+                "SrcName": "_result",
+                "DstId": 2,
+                "DstName": "_target"
+              }
+            ],
+            "UserData": {
+              "Title": "On Map Loaded",
+              "id": "c654e9f9-71a2-4e48-9d1f-a86927bfdfd3"
+            }
+          },
           "OnMapUnloaded": null,
           "UseMapFromLaunch": false
+        },
+        {
+          "__type": "MapPhysics"
         }
       ],
       "Children": []
@@ -71,18 +126,14 @@
       "Enabled": true,
       "Components": [
         {
-          "__version": 0,
           "__type": "ScreenPanel",
-          "__enabled": true,
           "AutoScreenScale": true,
           "Opacity": 1,
           "Scale": 1,
           "ZIndex": 100
         },
         {
-          "__version": 0,
-          "__type": "Hud",
-          "__enabled": true
+          "__type": "Hud"
         }
       ]
     },
@@ -92,9 +143,7 @@
       "Enabled": true,
       "Components": [
         {
-          "__version": 0,
           "__type": "GameNetwork",
-          "__enabled": true,
           "CameraStart": "338bd38c-ec45-4d8b-93a3-6eeb2645bab8",
           "PlayerPrefab": "assets/prefabs/player.prefab",
           "SpawnPoints": [],
@@ -109,11 +158,9 @@
       "Enabled": true,
       "Components": [
         {
-          "__version": 0,
           "__type": "AISpawner",
-          "__enabled": true,
           "_enemyPrefab": "assets/prefabs/ai/aibot1.prefab",
-          "_spawnRate": 24
+          "_spawnRate": 3
         }
       ]
     },
@@ -124,9 +171,7 @@
       "Enabled": true,
       "Components": [
         {
-          "__version": 0,
           "__type": "AISpawner",
-          "__enabled": true,
           "_enemyPrefab": "assets/prefabs/ai/aibot1.prefab",
           "_spawnRate": 24
         }
@@ -140,9 +185,7 @@
       "Enabled": true,
       "Components": [
         {
-          "__version": 0,
           "__type": "CameraComponent",
-          "__enabled": true,
           "BackgroundColor": "0.33333,0.46275,0.52157,1",
           "ClearFlags": "All",
           "FieldOfView": 90,
@@ -158,27 +201,21 @@
           "ZNear": 10
         },
         {
-          "__version": 0,
           "__type": "Tonemapping",
-          "__enabled": true,
           "ExposureCompensation": 0.27,
           "MaximumExposure": 1.01,
           "MinimumExposure": 0.88,
           "Rate": 1.29
         },
         {
-          "__version": 0,
           "__type": "DepthOfField",
-          "__enabled": true,
           "BackBlur": true,
           "BlurSize": 72.59,
           "FocalDistance": 37.28,
           "FrontBlur": true
         },
         {
-          "__version": 0,
           "__type": "Bloom",
-          "__enabled": true,
           "BloomColor": {
             "color": [
               {
@@ -206,9 +243,7 @@
           "ThresholdWidth": 1.02
         },
         {
-          "__version": 0,
-          "__type": "Devcam",
-          "__enabled": true
+          "__type": "Devcam"
         }
       ]
     },

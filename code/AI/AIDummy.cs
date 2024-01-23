@@ -18,7 +18,7 @@ public sealed class AIDummy : Component, Component.IDamageable
 	{
 		_hitbox.Target = GameObject;
 
-		if ( !GameNetworkSystem.IsHost )
+		if ( !Networking.IsHost )
 			return;
 
 		Controller = Components.GetOrCreate<CharacterController>();
@@ -28,12 +28,11 @@ public sealed class AIDummy : Component, Component.IDamageable
 
 	protected override void OnUpdate()
 	{
-		if ( !GameNetworkSystem.IsHost )
+		if ( !Networking.IsHost )
 			return;
 
 		if ( _sincePickedDir > 4 )
 		{
-
 			var mult = 50;
 			var speed = Random.Shared.Float( _speedRange[0].Value * mult, _speedRange[1].Value * mult );
 
@@ -62,9 +61,14 @@ public sealed class AIDummy : Component, Component.IDamageable
 	{
 		Sound.Play( "assets/sounds/pop.sound", Transform.Position );
 
-		if ( Random.Shared.Next( 0, 3 ) == 1 )
-			Random.Shared.FromList( _abilityDrops ).Clone( Transform.Position );
-
+		if ( Networking.IsHost )
+		{
+			if ( Random.Shared.Next( 0, 3 ) == 1 )
+			{
+				var drop = Random.Shared.FromList( _abilityDrops ).Clone( Transform.Position );
+				drop.NetworkSpawn();
+			}
+		}
 		GameObject.Destroy();
 	}
 }

@@ -1,0 +1,35 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace ATMP.UI
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	@{
+		if (Local.Player is null)
+			return;
+	}
+
+	@{
+		foreach(var ability in Local.Player.Abilities)
+		{
+			// TODO: On hover tooltip?
+			<img src=@(PlayerController.GetAbilityIcon(ability))>
+		}
+	}
+</root>
+
+
+@code {
+
+	public override void Tick()
+	{
+		SetClass("active", Input.Down(GameInputActions.Score));
+	}
+
+	protected override int BuildHash()
+	{
+		return System.HashCode.Combine(Local.Player is null ? 0 : Local.Player.Abilities.Count);
+	}
+}

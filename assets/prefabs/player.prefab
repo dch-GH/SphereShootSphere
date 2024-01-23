@@ -1,29 +1,38 @@
 {
   "RootObject": {
-    "Id": "bca58a91-3481-456e-a7e3-9750a8dd0216",
+    "Id": "13caa459-47bc-4677-89db-9d3a26b83bad",
     "Name": "player",
+    "Tags": "player",
     "Enabled": true,
     "Components": [
       {
-        "__version": 0,
         "__type": "CharacterController",
-        "__enabled": true,
         "Acceleration": 10,
         "GroundAngle": 45,
         "Height": 64,
-        "IgnoreLayers": "",
+        "IgnoreLayers": "pickup",
         "Radius": 16,
         "StepHeight": 18
       },
       {
-        "__version": 0,
         "__type": "PlayerController",
-        "__enabled": true,
-        "_hitbox": "13be28ae-421a-4c50-adc1-48235517a468",
-        "_renderer": "13be28ae-421a-4c50-adc1-48235517a468",
-        "Body": "13be28ae-421a-4c50-adc1-48235517a468",
-        "Controller": "bca58a91-3481-456e-a7e3-9750a8dd0216",
-        "Eye": "c8c3738c-51e6-4d35-ab21-468c6ad0afe5",
+        "_hitbox": {
+          "_type": "component",
+          "go": "e4973ad1-99a3-422e-85ab-9b3dab3d9c77",
+          "component_type": "ManualHitbox"
+        },
+        "_renderer": {
+          "_type": "component",
+          "go": "e4973ad1-99a3-422e-85ab-9b3dab3d9c77",
+          "component_type": "ModelRenderer"
+        },
+        "Body": "e4973ad1-99a3-422e-85ab-9b3dab3d9c77",
+        "Controller": {
+          "_type": "component",
+          "go": "13caa459-47bc-4677-89db-9d3a26b83bad",
+          "component_type": "CharacterController"
+        },
+        "Eye": "7d3892ab-aec1-4405-806d-0dd13b472e36",
         "Gravity": "0,0,800",
         "MoveSpeed": 400,
         "PlayerMaterials": [
@@ -35,28 +44,28 @@
         "RollLerpSpeed": 7
       },
       {
-        "__version": 0,
         "__type": "Weapon",
-        "__enabled": true,
-        "Beam": "bca58a91-3481-456e-a7e3-9750a8dd0216",
-        "Splash": "7836c229-5601-4769-a6cc-81c4fcedbe2e"
+        "Beam": {
+          "_type": "component",
+          "go": "13caa459-47bc-4677-89db-9d3a26b83bad",
+          "component_type": "SceneParticleManager"
+        },
+        "Splash": {
+          "_type": "component",
+          "go": "78fb14a6-7bf8-4340-91af-c98668439f06",
+          "component_type": "SceneParticleManager"
+        }
       },
       {
-        "__version": 0,
         "__type": "SceneParticleManager",
-        "__enabled": true,
         "Template": "assets/particles/beam.vpcf"
       },
       {
-        "__version": 0,
         "__type": "WorldChatter",
-        "__enabled": true,
         "_worldChatPrefab": "assets/prefabs/worldchatpopup.prefab"
       },
       {
-        "__version": 0,
         "__type": "BoxCollider",
-        "__enabled": true,
         "Center": "0,0,32.20002",
         "IsTrigger": true,
         "Scale": "32,32,64",
@@ -66,16 +75,14 @@
     ],
     "Children": [
       {
-        "Id": "13be28ae-421a-4c50-adc1-48235517a468",
+        "Id": "e4973ad1-99a3-422e-85ab-9b3dab3d9c77",
         "Name": "Body",
         "Position": "0,0,33.96304",
         "Scale": "0.5,0.5,0.5",
         "Enabled": true,
         "Components": [
           {
-            "__version": 0,
             "__type": "ModelRenderer",
-            "__enabled": true,
             "BodyGroups": 18446744073709551615,
             "MaterialGroup": null,
             "MaterialOverride": "assets/materials/player_nerd.vmat",
@@ -84,9 +91,7 @@
             "Tint": "1,1,1,1"
           },
           {
-            "__version": 0,
             "__type": "ManualHitbox",
-            "__enabled": true,
             "CenterA": "0,0,0",
             "CenterB": "0,0,0",
             "HitboxTags": null,
@@ -97,35 +102,31 @@
         ]
       },
       {
-        "Id": "c8c3738c-51e6-4d35-ab21-468c6ad0afe5",
+        "Id": "7d3892ab-aec1-4405-806d-0dd13b472e36",
         "Name": "Eyes",
         "Position": "0,0,59.39347",
         "Enabled": true
       },
       {
-        "Id": "7836c229-5601-4769-a6cc-81c4fcedbe2e",
+        "Id": "78fb14a6-7bf8-4340-91af-c98668439f06",
         "Name": "BeamSplashes",
         "Position": "-97.91241,123.5333,-33.04216",
         "Enabled": true,
         "Components": [
           {
-            "__version": 0,
             "__type": "SceneParticleManager",
-            "__enabled": true,
             "Template": "assets/particles/beam_hit.vpcf"
           }
         ]
       },
       {
-        "Id": "21e249e1-9f0b-42f9-97c7-55d44ce08a70",
+        "Id": "e0a31bb7-0f3e-4643-a8ce-3ff65c01acb0",
         "Name": "Nametag",
         "Position": "0,0,66.03888",
         "Enabled": true,
         "Components": [
           {
-            "__version": 0,
             "__type": "WorldPanel",
-            "__enabled": true,
             "HorizontalAlign": "Center",
             "LookAtCamera": true,
             "PanelSize": "512,512",
@@ -133,9 +134,7 @@
             "VerticalAlign": "Center"
           },
           {
-            "__version": 0,
-            "__type": "Nametag",
-            "__enabled": true
+            "__type": "Nametag"
           }
         ]
       }

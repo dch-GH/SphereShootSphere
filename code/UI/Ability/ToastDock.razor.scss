@@ -1,0 +1,20 @@
+ToastDock {
+    width: 90%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 0;
+
+    .inner {
+        margin-right: 10%;
+        margin-left: 10%;
+        margin-top: 10%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        border-radius: 32px;
+    }
+}

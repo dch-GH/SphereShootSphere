@@ -1,17 +1,17 @@
 {
   "RootObject": {
-    "Id": "9b147bd9-7911-4d47-ba45-501488e7d1f5",
-    "Name": "zoom_pickup",
+    "Id": "080ee3b9-a7af-40da-b43b-1e3ebcfeea46",
+    "Name": "wallbang",
     "Tags": "pickup",
     "Networked": true,
     "Enabled": true,
     "Components": [
       {
         "__type": "AbilityPickup",
-        "Ability": "Zoom",
-        "ToastIcon": "assets/materials/zoom.vtex",
-        "ToastSubtitle": "Right-click to zoom",
-        "ToastTitle": "Zoom"
+        "Ability": "Wallbang",
+        "ToastIcon": "assets/materials/wallbang.vtex",
+        "ToastSubtitle": "Your attacks pierce the world",
+        "ToastTitle": "Pierce"
       },
       {
         "__type": "SpriteRenderer",
@@ -22,7 +22,7 @@
         "FogStrength": 1,
         "Opaque": false,
         "Size": "32,32",
-        "Texture": "assets/materials/zoom.vtex"
+        "Texture": "assets/materials/wallbang.vtex"
       },
       {
         "__type": "Rigidbody",

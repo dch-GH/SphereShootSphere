@@ -26,12 +26,19 @@ public class Weapon : Component, IRenderOverlay
 
 			var eyes = _player.Eye.Transform.Position;
 			var fwd = _player.Cam.GameObject.Transform.LocalRotation.Forward;
-			var tr = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).IgnoreGameObjectHierarchy( GameObject ).UseHitboxes().Run();
 
+			var rocketJumpTrace = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).IgnoreGameObjectHierarchy( GameObject ).Run();
+			var traceSetup = Scene.Trace.Ray( eyes, eyes + fwd * 5000 ).IgnoreGameObjectHierarchy( GameObject ).UseHitboxes();
+			if ( _player.HasAbility( PlayerController.PlayerAbility.Wallbang ) )
+			{
+				traceSetup = traceSetup.WithoutTags( GameTags.World );
+			}
+
+			var tr = traceSetup.Run();
 			ShootEffect( eyes, tr.Hit, tr.Hit ? tr.HitPosition : eyes + fwd * 2500 );
 
 			// Rocket jump
-			if ( tr.Hit && tr.Distance <= 128 && tr.Hitbox is null )
+			if ( rocketJumpTrace.Hit && rocketJumpTrace.Distance <= 128 )
 			{
 				_player.Controller.Punch( -fwd * 420 );
 			}

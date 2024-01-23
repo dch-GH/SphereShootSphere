@@ -1,0 +1,40 @@
+@import "ui/_vars.scss";
+
+AbilityToast {
+    backdrop-filter: blur(20px);
+    color: white;
+    background-image: linear-gradient(to top, rgba(#080813, 0.9), rgba(#1c1c38, 0.55), rgba(#1c1c38, 0.1));
+    padding: 32px;
+    border-radius: $rounding;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+
+    .subtitle {
+        font-size: 32px;
+        color: wheat;
+    }
+
+    .info-text {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .title-item {
+        color: wheat;
+    }
+
+    transition: all 1s ease-in-out;
+    // transform: scale(1);
+    top: 0;
+
+    &:intro {
+        // transform: scale(0);
+        top: 500px;
+    }
+
+    &:outro {
+        // transform: scale(0);
+        top: 500px;
+    }
+}

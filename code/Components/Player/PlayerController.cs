@@ -1,8 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ATMP;
 
-public sealed partial class PlayerController : Component
+public sealed partial class PlayerController : Sandbox.Component
 {
 
 	[Property] public CharacterController Controller { get; private set; }
@@ -17,7 +18,7 @@ public sealed partial class PlayerController : Component
 	[Property] public List<Material> PlayerMaterials { get; set; }
 
 	public Vector3 WishVelocity { get; private set; }
-
+	public bool ShowFastAbilityToasts { get; private set; }
 
 	[Sync( Query = true )]
 	public Angles EyeAngles
@@ -48,6 +49,7 @@ public sealed partial class PlayerController : Component
 			return;
 		}
 
+		Abilities = new();
 		Local.OnSpawned?.Invoke( GameObject );
 		Sound.Play( "assets/sounds/join.sound", GameObject.Transform.Position );
 		SpawnRPC();
@@ -68,6 +70,7 @@ public sealed partial class PlayerController : Component
 		};
 
 		Local.Pawn = GameObject;
+		Local.Player = this;
 
 		Cam = Scene.GetAllComponents<CameraComponent>().First();
 		if ( Cam is not null )
@@ -179,8 +182,11 @@ public sealed partial class PlayerController : Component
 		if ( IsProxy )
 			return;
 
-		if ( Transform.Position.z <= -100 )
-			Respawn();
+		// TODO: Do we need this?
+		if ( Transform.Position.z <= -1000 )
+		{
+			SetPosition( Vector3.Up * 64 );
+		}
 
 		BuildWishVelocity();
 
@@ -221,7 +227,11 @@ public sealed partial class PlayerController : Component
 
 	protected override void OnDestroy()
 	{
+		if ( IsProxy )
+			return;
+
 		Local.Pawn = null;
+		Local.Player = null;
 		Local.Client = null;
 	}
 
@@ -270,7 +280,20 @@ public sealed partial class PlayerController : Component
 	[Authority]
 	public void Respawn()
 	{
+		if ( !IsProxy )
+		{
+			// You died noob, start over
+			Abilities.Clear();
+			ShowFastAbilityToasts = true;
+		}
+
 		var sp = Random.Shared.FromList( GameNetwork.Instance.SpawnPoints );
-		GameObject.Transform.Position = sp.Transform.Position;
+		SetPosition( sp.Transform.Position );
+	}
+
+	[Authority]
+	private void SetPosition( Vector3 pos )
+	{
+		GameObject.Transform.Position = pos;
 	}
 }

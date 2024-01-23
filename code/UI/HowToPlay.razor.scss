@@ -1,5 +1,5 @@
-$rounding: 4px;
-$blue: #3273eb;
+@import "_vars.scss";
+
 HowToPlay {
     opacity: 0;
     position: absolute;
@@ -31,11 +31,6 @@ HowToPlay {
         padding: 8px;
         display: flex;
         flex-direction: column;
-    }
-
-    .line {
-        display: flex;
-        gap: 12px;
     }
 
     .input-hint {

@@ -1,0 +1,41 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace ATMP.UI
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	<img src=@($"{Pickup.ToastIcon.ResourcePath}")>
+	<div class="info-text">
+		<div class="rich-line">
+			<label class="title">@($"You gained")</label>
+			<label class="title title-item">@(Pickup.ToastTitle).</label>
+		</div>
+		<label class="subtitle">@(Pickup.ToastSubtitle).</label>
+	</div>
+
+</root>
+
+@code
+{
+	public AbilityPickup Pickup { get; set; }
+	private RealTimeSince _lifeTime = 0;
+	private float _maxLifeTime = 6;
+
+	public AbilityToast()
+	{
+		_maxLifeTime = Local.Player.ShowFastAbilityToasts ? 2 : 6;
+	}
+
+	public override void Tick()
+	{
+		if (_lifeTime >= _maxLifeTime)
+			Delete();
+	}
+
+	protected override int BuildHash()
+	{
+		return System.HashCode.Combine(_lifeTime);
+	}
+}

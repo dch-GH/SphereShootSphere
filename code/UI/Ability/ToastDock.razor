@@ -1,0 +1,51 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace ATMP.UI
+@inherits Panel
+@attribute [StyleSheet]
+
+<root>
+	<div class="inner" @ref=Inner>
+		@* <AbilityToast></AbilityToast> *@
+	</div>
+</root>
+
+@code
+{
+	public static ToastDock Instance;
+	private Panel Inner { get; set; }
+	private Queue<AbilityPickup> _queue;
+	private AbilityToast _current;
+
+	public ToastDock()
+	{
+		_queue = new();
+		Instance = this;
+	}
+
+	public void Toast(AbilityPickup pickup)
+	{
+		var t = new AbilityToast();
+		_queue.Enqueue(pickup);
+	}
+
+	public override void Tick()
+	{
+		if (_queue.Count <= 0)
+			return;
+
+		if(Inner.ChildrenCount <= 0)
+		{
+			var pickup = _queue.Dequeue();
+			var toast = new AbilityToast();
+			toast.Pickup = pickup;
+			Inner.AddChild(toast);
+		}
+	}
+
+    protected override int BuildHash()
+	{
+		return System.HashCode.Combine(Time.Now);
+	}
+}

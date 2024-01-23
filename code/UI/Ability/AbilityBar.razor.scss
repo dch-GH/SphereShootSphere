@@ -1,0 +1,32 @@
+@import "ui/_vars.scss";
+
+AbilityBar {
+    backdrop-filter: blur($blur);
+    height: 52px;
+    top: -300;
+    width: 100%;
+    margin-left: 25%;
+    margin-right: 25%;
+    background-image: linear-gradient(to bottom, rgba(#080813, 0.9), rgba(#1c1c38, 0.55), rgba(#1c1c38, 0.1));
+    border-radius: 0 0 32px 32px;
+
+    position: absolute;
+
+    display: flex;
+    padding-left: 32px;
+    padding-right: 32px;
+    align-items: center;
+    flex-direction: row;
+    flex-shrink: 3;
+
+    img {
+        width: 48px;
+        height: 48px;
+    }
+
+    &.active {
+        top: 0;
+    }
+
+    transition: top 300ms ease-in-out;
+}
