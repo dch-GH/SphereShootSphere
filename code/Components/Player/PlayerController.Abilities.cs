@@ -20,15 +20,15 @@ partial class PlayerController
 
 	private float _zoomTarget = 0;
 	private float _zoomSpeed = 8;
+	private RealTimeSince _sinceUnzoomed;
 
 	private void UpdateAbilities()
 	{
 		if ( IsProxy )
 			return;
 
-		var lerpAmount = 2.3f;
-		if ( Input.Released( GameInputActions.SecondaryAttack ) )
-			lerpAmount = 15;
+		if ( Input.Released( GameInputActions.SecondaryAttack ) && HasAbility( PlayerAbility.Zoom ) )
+			_sinceUnzoomed = 0;
 
 		if ( Input.Down( GameInputActions.SecondaryAttack ) && HasAbility( PlayerAbility.Zoom ) )
 		{
@@ -40,7 +40,8 @@ partial class PlayerController
 		{
 			_zoomTarget = 0;
 			_aimSpeedModifier = 1;
-			_fovTarget = MathX.Lerp( _fovTarget, _defaultFov + _moveSpeed / 93, Time.Delta * lerpAmount );
+			var lerpIntensity = _sinceUnzoomed <= 0.5f ? 15 : 2.3f;
+			_fovTarget = MathX.Lerp( _fovTarget, _defaultFov + _moveSpeed / 93, Time.Delta * lerpIntensity );
 		}
 	}
 

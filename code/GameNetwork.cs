@@ -32,6 +32,9 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 
 	[Property] public SpawnPoint TestSpawn { get; set; }
 
+	// Just to be extra sure
+	private static bool DebugTest => Game.IsEditor && false;
+
 	protected override void OnAwake()
 	{
 		var cam = Scene.GetAllComponents<CameraComponent>().First();
@@ -71,7 +74,7 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 			}
 		}
 
-		if ( Game.IsEditor )
+		if ( DebugTest )
 		{
 			SpawnPoints.Clear();
 			SpawnPoints.Add( TestSpawn );
@@ -131,7 +134,7 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 	// Host only
 	private async void SpawnPlayerAsync( Connection channel, ClientComponent client, Vector3 position )
 	{
-		if ( !Game.IsEditor )
+		if ( !DebugTest )
 			await GameTask.DelayRealtimeSeconds( 1.5f );
 
 		// Spawn this object and make the client the owner
