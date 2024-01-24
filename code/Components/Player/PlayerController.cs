@@ -11,6 +11,7 @@ public sealed partial class PlayerController : Sandbox.Component
 	[Property] ManualHitbox _hitbox { get; set; }
 	[Property] public Vector3 Gravity { get; set; } = new Vector3( 0, 0, 800 );
 	[Property] private float MoveSpeed { get; set; } = 400f;
+	[Property] public float DashIntensity { get; private set; } = 300;
 	[Property] public GameObject Body { get; set; }
 	[Property] public GameObject Eye { get; set; }
 	[Property] private float RollIntensity { get; set; } = 0.05f;
@@ -38,6 +39,8 @@ public sealed partial class PlayerController : Sandbox.Component
 	float _fovTarget = _defaultFov;
 	private float _aimSpeedModifier = 1;
 	private float _moveSpeed;
+	private float _timeAirbornSecs;
+	private int _numDashes;
 
 	protected override void OnStart()
 	{
@@ -115,6 +118,14 @@ public sealed partial class PlayerController : Sandbox.Component
 			Cam.Transform.Rotation = lookDir;
 
 			Cam.FieldOfView = _fovTarget;
+
+			// Bunnyhop is too fast for OnFixedUpdate
+			// to catch IsOnGround
+			if ( Controller.IsOnGround )
+			{
+				_numDashes = 0;
+				Log.Info( "ground" );
+			}
 		}
 
 		if ( Controller is null )
@@ -205,12 +216,26 @@ public sealed partial class PlayerController : Sandbox.Component
 			Controller.Velocity = Controller.Velocity.WithZ( 0 );
 			Controller.Accelerate( WishVelocity );
 			Controller.ApplyFriction( 4.0f );
+			_timeAirbornSecs = 0;
 		}
 		else
 		{
 			Controller.Velocity -= Gravity * Time.Delta * 0.5f;
 			Controller.Accelerate( WishVelocity / 2 );
 			Controller.ApplyFriction( 0.1f );
+			_timeAirbornSecs += Time.Delta;
+		}
+
+		if ( Input.Pressed( GameInputActions.Jump ) && HasAbility( PlayerAbility.AirDash ) && _timeAirbornSecs >= 0.20f && _numDashes <= 0 )
+		{
+			var mvDir = Input.AnalogMove.y;
+			if ( mvDir != 0 )
+			{
+				var eyesRot = _eyeAngles.ToRotation();
+				var dashDir = eyesRot.Right * -mvDir * DashIntensity;
+				Controller.Punch( dashDir + Vector3.Up * DashIntensity / 1.5f );
+				_numDashes += 1;
+			}
 		}
 
 		Controller.Move();
@@ -283,7 +308,7 @@ public sealed partial class PlayerController : Sandbox.Component
 		if ( !IsProxy )
 		{
 			// You died noob, start over
-			Abilities.Clear();
+			Abilities = PlayerAbility.None;
 			ShowFastAbilityToasts = true;
 		}
 

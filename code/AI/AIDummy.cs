@@ -63,11 +63,11 @@ public sealed class AIDummy : Component, Component.IDamageable
 
 		if ( Networking.IsHost )
 		{
-			if ( Random.Shared.Next( 0, 3 ) == 1 )
-			{
-				var drop = Random.Shared.FromList( _abilityDrops ).Clone( Transform.Position );
-				drop.NetworkSpawn();
-			}
+			var drop = Random.Shared.FromList( _abilityDrops ).Clone( Transform.Position );
+			drop.NetworkSpawn();
+			// if ( Random.Shared.Next( 0, 3 ) == 1 )
+			// {
+			// }
 		}
 		GameObject.Destroy();
 	}

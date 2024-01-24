@@ -1,17 +1,21 @@
 {
   "RootObject": {
-    "Id": "b3189de1-4080-47ce-8728-59d8385c9594",
+    "Id": "40958a90-f77e-4809-9df5-d82770084522",
     "Name": "aibot1",
     "Enabled": true,
     "Components": [
       {
-        "__version": 0,
         "__type": "AIDummy",
-        "__enabled": true,
         "_abilityDrops": [
-          "assets/prefabs/abilities/zoom_pickup.prefab"
+          "assets/prefabs/abilities/zoom_pickup.prefab",
+          "assets/prefabs/abilities/wallbang_pickup.prefab",
+          "assets/prefabs/abilities/dash_pickup.prefab"
         ],
-        "_hitbox": "b3189de1-4080-47ce-8728-59d8385c9594",
+        "_hitbox": {
+          "_type": "component",
+          "go": "40958a90-f77e-4809-9df5-d82770084522",
+          "component_type": "ManualHitbox"
+        },
         "_popSound": "assets/sounds/pop.sound",
         "_speedRange": [
           {
@@ -31,9 +35,7 @@
         ]
       },
       {
-        "__version": 0,
         "__type": "CharacterController",
-        "__enabled": true,
         "Acceleration": 4.35,
         "GroundAngle": 45,
         "Height": 36.4,
@@ -42,9 +44,7 @@
         "StepHeight": 18
       },
       {
-        "__version": 0,
         "__type": "ModelRenderer",
-        "__enabled": true,
         "BodyGroups": 18446744073709551615,
         "MaterialGroup": null,
         "MaterialOverride": null,
@@ -53,9 +53,7 @@
         "Tint": "1,1,1,1"
       },
       {
-        "__version": 0,
         "__type": "ManualHitbox",
-        "__enabled": true,
         "CenterA": "0,0,16.9",
         "CenterB": "0,0,0",
         "HitboxTags": null,

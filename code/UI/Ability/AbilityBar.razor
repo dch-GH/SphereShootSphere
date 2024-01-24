@@ -12,9 +12,12 @@
 	}
 
 	@{
-		foreach(var ability in Local.Player.Abilities)
+		foreach (var ability in Enum.GetValues<PlayerController.PlayerAbility>())
 		{
-			// TODO: On hover tooltip?
+
+			if (!Local.Player.HasAbility(ability) || ability == PlayerController.PlayerAbility.None)
+				continue;
+
 			<img src=@(PlayerController.GetAbilityIcon(ability))>
 		}
 	}
@@ -30,6 +33,6 @@
 
 	protected override int BuildHash()
 	{
-		return System.HashCode.Combine(Local.Player is null ? 0 : Local.Player.Abilities.Count);
+		return System.HashCode.Combine(Local.Player is null ? 0 : Local.Player.Abilities);
 	}
 }

@@ -6,7 +6,7 @@ namespace ATMP;
 
 public sealed class AbilityPickup : Component, Component.ITriggerListener
 {
-	[Property] public PlayerController.PlayerAbility Ability { get; set; }
+	[Property] public PlayerAbility Ability { get; set; }
 	[Property] public string ToastTitle { get; set; }
 	[Property] public string ToastSubtitle { get; set; }
 	[Property] public Texture ToastIcon { get; set; }
@@ -25,23 +25,32 @@ public sealed class AbilityPickup : Component, Component.ITriggerListener
 	{
 		if ( other.GameObject.Components.TryGet<PlayerController>( out var player ) )
 		{
-			// TryPickupAbility( player.Network.OwnerId, Ability );
-
-			if ( player.HasAbility( Ability ) )
-				return;
-
-			if ( player == Local.Player )
-			{
-				Log.Info( $"You picked up the {Ability} ability!" );
-				ToastDock.Instance.Toast( this );
-				player.Abilities.Add( Ability );
-			}
-
-			GameObject.Destroy();
+			OnPickedUp( player.GameObject.Id );
 		}
 	}
 
 	public void OnTriggerExit( Collider other )
 	{
+	}
+
+	[Broadcast]
+	public void OnPickedUp( Guid playerGameObjectId )
+	{
+		if ( playerGameObjectId != Local.Pawn.Id )
+			return;
+
+		var player = Local.Player;
+
+		if ( player.HasAbility( Ability ) )
+			return;
+
+		if ( player == Local.Player )
+		{
+			Log.Info( $"You picked up the {Ability} ability!" );
+			ToastDock.Instance.Toast( this );
+			player.Abilities |= Ability;
+		}
+
+		GameObject.Destroy();
 	}
 }

@@ -30,7 +30,7 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 
 	public Dictionary<Connection, ClientComponent> Clients { get; private set; }
 
-	[Sync] public List<Guid> ClientGuids { get; set; }
+	[Property] public SpawnPoint TestSpawn { get; set; }
 
 	protected override void OnAwake()
 	{
@@ -69,6 +69,12 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 				var sc = spawn.Components.GetOrCreate<SpawnPoint>();
 				SpawnPoints[0] = sc;
 			}
+		}
+
+		if ( Game.IsEditor )
+		{
+			SpawnPoints.Clear();
+			SpawnPoints.Add( TestSpawn );
 		}
 
 		Instance = this;
@@ -125,7 +131,8 @@ public sealed class GameNetwork : Component, Component.INetworkListener
 	// Host only
 	private async void SpawnPlayerAsync( Connection channel, ClientComponent client, Vector3 position )
 	{
-		await GameTask.DelayRealtimeSeconds( 1.5f );
+		if ( !Game.IsEditor )
+			await GameTask.DelayRealtimeSeconds( 1.5f );
 
 		// Spawn this object and make the client the owner
 		var player = PlayerPrefab.Clone( position );

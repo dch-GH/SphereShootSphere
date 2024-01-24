@@ -1,0 +1,69 @@
+{
+  "RootObject": {
+    "Id": "b697a12e-a0be-43d5-a013-ebc61e5fd02e",
+    "Name": "dash_pickup",
+    "Position": "0,0,43.24044",
+    "Tags": "pickup",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "AbilityPickup",
+        "Ability": "AirDash",
+        "ToastIcon": "assets/materials/dash.vtex",
+        "ToastSubtitle": "Strafe dash shortly after going airborn",
+        "ToastTitle": "Dash"
+      },
+      {
+        "__type": "SpriteRenderer",
+        "Additive": false,
+        "CastShadows": true,
+        "Color": "1,1,1,1",
+        "DepthFeather": 0,
+        "FogStrength": 1,
+        "Opaque": false,
+        "Size": "32,32",
+        "Texture": "assets/materials/dash.vtex"
+      },
+      {
+        "__type": "Rigidbody",
+        "AngularDamping": 0,
+        "Gravity": true,
+        "LinearDamping": 0,
+        "Locking": {
+          "Pitch": true,
+          "Roll": true
+        },
+        "RigidbodyFlags": 0,
+        "StartAsleep": false
+      },
+      {
+        "__type": "SphereCollider",
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Radius": 22.000004,
+        "Static": false,
+        "Surface": null
+      },
+      {
+        "__type": "SphereCollider",
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Radius": 22.000004,
+        "Static": false,
+        "Surface": null
+      },
+      {
+        "__type": "BoxCollider",
+        "Center": "0,0,0",
+        "IsTrigger": true,
+        "Scale": "50,50,50",
+        "Static": false,
+        "Surface": null
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "__references": []
+}

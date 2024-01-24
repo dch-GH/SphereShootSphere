@@ -82,9 +82,9 @@
                 "Id": 2,
                 "Type": "call",
                 "Properties": {
-                  "_isStatic": false,
                   "_name": "OnMapLoaded",
-                  "_type": "package.null.woop/ATMP.MapPhysics"
+                  "_type": "package.null.woop/ATMP.MapPhysics",
+                  "_isStatic": false
                 },
                 "UserData": {
                   "Position": "272,-0"
@@ -147,7 +147,12 @@
           "CameraStart": "338bd38c-ec45-4d8b-93a3-6eeb2645bab8",
           "PlayerPrefab": "assets/prefabs/player.prefab",
           "SpawnPoints": [],
-          "StartServer": true
+          "StartServer": true,
+          "TestSpawn": {
+            "_type": "component",
+            "go": "bc7fc169-51f1-4a9a-9d53-af241c52caab",
+            "component_type": "SpawnPoint"
+          }
         }
       ]
     },
@@ -253,6 +258,45 @@
       "Position": "1878.328,-1936.677,816.8301",
       "Rotation": "0.1209526,-0.05356938,-0.906301,-0.4013969",
       "Enabled": true
+    },
+    {
+      "Id": "18dbb5ac-6e6b-4832-8031-e724c6c20fa1",
+      "Name": "zoom_pickup",
+      "Position": "110.9832,-237.4177,52.97764",
+      "Tags": "pickup",
+      "Networked": true,
+      "Enabled": true,
+      "__Prefab": "assets/prefabs/abilities/zoom_pickup.prefab"
+    },
+    {
+      "Id": "bc7fc169-51f1-4a9a-9d53-af241c52caab",
+      "Name": "TestSpawn",
+      "Position": "67.85384,-539.8087,63.94245",
+      "Rotation": "0.00000003934978,0.00000000000000210048,0.6601798,0.7511076",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "SpawnPoint",
+          "Color": "0.8902,0.31765,0.05098,1"
+        }
+      ]
+    },
+    {
+      "Id": "b697a12e-a0be-43d5-a013-ebc61e5fd02e",
+      "Name": "dash_pickup",
+      "Position": "0,0,43.24044",
+      "Tags": "pickup",
+      "Enabled": true,
+      "__Prefab": "assets/prefabs/abilities/dash_pickup.prefab"
+    },
+    {
+      "Id": "8072b7c5-252c-47d2-af43-aaf96e7fb28c",
+      "Name": "wallbang",
+      "Position": "-34.56134,-112.5366,41.59812",
+      "Tags": "pickup",
+      "Networked": true,
+      "Enabled": true,
+      "__Prefab": "assets/prefabs/abilities/wallbang_pickup.prefab"
     }
   ],
   "SceneProperties": {
