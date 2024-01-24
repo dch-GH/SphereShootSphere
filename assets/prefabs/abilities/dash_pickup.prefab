@@ -1,8 +1,7 @@
 {
   "RootObject": {
-    "Id": "b697a12e-a0be-43d5-a013-ebc61e5fd02e",
+    "Id": "1df6e0c6-78b8-4374-b095-ec5f3c738337",
     "Name": "dash_pickup",
-    "Position": "0,0,43.24044",
     "Tags": "pickup",
     "Enabled": true,
     "Components": [
@@ -35,14 +34,6 @@
         },
         "RigidbodyFlags": 0,
         "StartAsleep": false
-      },
-      {
-        "__type": "SphereCollider",
-        "Center": "0,0,0",
-        "IsTrigger": false,
-        "Radius": 22.000004,
-        "Static": false,
-        "Surface": null
       },
       {
         "__type": "SphereCollider",

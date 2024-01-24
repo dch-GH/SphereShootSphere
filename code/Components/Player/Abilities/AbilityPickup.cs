@@ -40,8 +40,7 @@ public sealed class AbilityPickup : Component, Component.ITriggerListener
 			return;
 
 		var player = Local.Player;
-
-		if ( player.HasAbility( Ability ) )
+		if ( !player.IsValid() || player.HasAbility( Ability ) )
 			return;
 
 		if ( player == Local.Player )
@@ -49,8 +48,13 @@ public sealed class AbilityPickup : Component, Component.ITriggerListener
 			Log.Info( $"You picked up the {Ability} ability!" );
 			ToastDock.Instance.Toast( this );
 			player.Abilities |= Ability;
+			AfterPickup();
 		}
+	}
 
+	[Authority]
+	public void AfterPickup()
+	{
 		GameObject.Destroy();
 	}
 }

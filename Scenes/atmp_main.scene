@@ -82,8 +82,8 @@
                 "Id": 2,
                 "Type": "call",
                 "Properties": {
-                  "_name": "OnMapLoaded",
                   "_type": "package.null.woop/ATMP.MapPhysics",
+                  "_name": "OnMapLoaded",
                   "_isStatic": false
                 },
                 "UserData": {

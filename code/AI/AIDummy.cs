@@ -60,14 +60,13 @@ public sealed class AIDummy : Component, Component.IDamageable
 	private void Die()
 	{
 		Sound.Play( "assets/sounds/pop.sound", Transform.Position );
-
 		if ( Networking.IsHost )
 		{
-			var drop = Random.Shared.FromList( _abilityDrops ).Clone( Transform.Position );
-			drop.NetworkSpawn();
-			// if ( Random.Shared.Next( 0, 3 ) == 1 )
-			// {
-			// }
+			if ( Random.Shared.Next( 0, 3 ) == 1 )
+			{
+				var drop = Random.Shared.FromList( _abilityDrops ).Clone( Transform.Position );
+				drop.NetworkSpawn();
+			}
 		}
 		GameObject.Destroy();
 	}

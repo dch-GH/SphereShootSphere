@@ -124,7 +124,6 @@ public sealed partial class PlayerController : Sandbox.Component
 			if ( Controller.IsOnGround )
 			{
 				_numDashes = 0;
-				Log.Info( "ground" );
 			}
 		}
 
